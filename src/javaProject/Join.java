@@ -29,8 +29,6 @@ public class Join extends JFrame   {
 		J_button();
 	}
 	
-	
-	
 	void J_idpw() {
 		
 		idPanel = new JPanel();
@@ -82,7 +80,7 @@ public class Join extends JFrame   {
 	void J_button() {
 		
 		b1 = new JButton("중복");
-		b2 = new JButton("JOIN");//중복, JOIN 박스 생성
+		b2 = new JButton("JOIN");//중복, JOIN 버튼 생성
 		
 		b1.setBounds(400,143,100,33);//위치, 크기 설정
 		b1.setBackground(new Color(210,50,50));//색상 빨간색
@@ -95,10 +93,10 @@ public class Join extends JFrame   {
 		b2.setForeground(new Color(255,255,255));
 		
 		add(b1);
-		add(b2);//LOGIN, JOIN 박스 설정 후 삽입
+		add(b2);//LOGIN, JOIN 버튼 설정 후 삽입
 		
 		status = new JLabel();
-		b2.addActionListener(new ActionListener() {//login버튼 클릭시 발생하는 액션
+		b2.addActionListener(new ActionListener() {//JOIN버튼 클릭시 발생하는 액션
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
