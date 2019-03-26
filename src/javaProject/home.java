@@ -4,7 +4,7 @@ public class home {
 
 	public static void main(String[] args) {
 		System.out.println("I want to go home.");
-		System.out.println("Á¹·Á...");
+		System.out.println("I am hungry");
 
 	}
 
