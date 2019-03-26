@@ -41,7 +41,7 @@ public class GUI extends JFrame{
 	void picture() {
 		
 		try {
-			File sourceimage = new File("C:\\Users\\이선아\\Desktop\\sejong.png");
+			File sourceimage = new File("src\\images\\sejong.png");
 			img = ImageIO.read(sourceimage);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -83,12 +83,12 @@ public class GUI extends JFrame{
 	void Button() {
 		
 		b1 = new JButton("LOGIN");
-		b2 = new JButton("JOIN");//LOGIN, JOIN 박스 생성
+		b2 = new JButton("JOIN");//LOGIN, JOIN 버튼 생성
 		
 		b1.setBounds(430,615,100,125);
 		b2.setBounds(250,770,120,40);
 		add(b1);
-		add(b2);//LOGIN, JOIN 박스 설정 후 삽입
+		add(b2);//LOGIN, JOIN 버튼 설정 후 삽입
 		
 		status = new JLabel();// id+pw 보여줄 label;
 		b1.addActionListener(new ActionListener() {//login버튼 클릭시 발생하는 액션
