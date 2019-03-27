@@ -22,7 +22,7 @@ public class user_inf {
 	 PreparedStatement ps = null;
 	 ResultSet rs = null;
 	 
-	 public int compareID(String id) {//특정 아이디로 데이터 출력
+	public int compareID(String id) {
 		 
 		 try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -75,12 +75,13 @@ public class user_inf {
 		 
 		 return 0;
 	 }
-	public int addMember(user u) {
+	public void addMember(user u) {
+
 		int result = 0;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
-			String sql = "insert into user_inf value(?,?,?)";
+			String sql = "insert into user_inf value(?,?,?,0)";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, u.getU_id());
 			ps.setString(2, u.getU_pw());
@@ -115,6 +116,60 @@ public class user_inf {
 			}
 		}
 		
+	}
+	public int login(String id, String pw) {
+		int result = 0;
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
+			String sql = "select u_id, u_pw from user_inf where u_id = ? ";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+		//	ps.setString(2, pw);
+			if(rs.next()) {
+				String u_id = rs.getString("u_id");
+				String u_pw = rs.getString("u_pw");
+				if(u_id.equals(id)) {
+					if(u_pw.equals(pw))
+						result = 1;// id, pw 둘다 일치
+					else
+						result = 2;// id만 일치
+				}
+				else
+					result = 3;// id, pw 둘다 불일치
+				
+			}
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			
+			if(ps!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(conn!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		return result;
+		
 	}
 }
