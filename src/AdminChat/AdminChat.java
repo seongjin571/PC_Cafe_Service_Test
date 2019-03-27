@@ -11,7 +11,7 @@ public class AdminChat {
 		
 		try {
 			// 서버소켓을 생성하여 7777번 포트와 결합(bind)시킨다.
-			serverSocket = new ServerSocket(7777);
+			serverSocket = new ServerSocket(3000);
 			System.out.println(getTime()+"서버가 준비되었습니다.");
 
 		} catch(IOException e) {
@@ -47,7 +47,7 @@ public class AdminChat {
 
 	// 현재시간을 문자열로 반환하는 함수
 	static String getTime() {
-		SimpleDateFormat f = new SimpleDateFormat("[hh:mm:ss]");
+		SimpleDateFormat f = new SimpleDateFormat("hh시 mm분 ss초>>");
 		return f.format(new Date());
 	}
 } // class
