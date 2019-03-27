@@ -1,0 +1,40 @@
+create database java_study;
+
+use java_study;
+//java_study database 생성 후 사용
+
+create table stock(
+        name varchar(10) primary key,
+        count int);
+
+insert into stock values ("원두", 10);
+insert into stock values ("우유", 10);
+insert into stock values ("복숭아", 10);
+insert into stock values ("레몬", 10);
+insert into stock values ("진라면", 10);
+insert into stock values ("짜파게티", 10);
+insert into stock values ("새우깡", 10);
+insert into stock values ("홈런볼", 10);
+insert into stock values ("핫도그", 10);
+insert into stock values ("누네띠네", 10);
+insert into stock values ("건빵", 10);
+//재고 테이블 생성
+
+ create table food(
+        id int primary key auto_increment,
+        name varchar(10) not null,
+        price int,
+        ingredients varchar(32));
+
+insert into food values (1,"카페라떼", 3000, "원두,우유");
+insert into food values (2,"아메리카노", 2000, "원두");
+insert into food values (3,"아이스티(복숭아)", 2000, "복숭아");
+insert into food values (4,"아이스티(레몬)", 2000, "레몬");
+insert into food values (5,"진라면", 2000, "진라면");
+insert into food values (6,"짜파게티", 2000, "짜파게티");
+insert into food values (7,"새우깡", 1000, "새우깡");
+insert into food values (8,"홈런볼", 2000, "홈런볼");
+insert into food values (9,"핫도그", 2000, "빵,소세지");
+insert into food values (10,"누네띠네", 1000, "누네띠네");
+insert into food values (11,"건빵", 1000, "건빵");
+//음식 테이블 생성
