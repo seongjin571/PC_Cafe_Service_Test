@@ -9,10 +9,11 @@ import javax.swing.*;
 import jdbc.dto.Food;
 import jdbc.dto.Stock;
 
+
 public class managerGUI extends JFrame{
 	 private static String dburl = "jdbc:mysql://localhost/java_study?characterEncoding=UTF-8&serverTimezone=UTC";
-	 private static String dbUser = "root";
-	 private static String dbpasswd = "16010948";
+	 private static String dbUser = "java";
+	 private static String dbpasswd = "wkqktmxjel";
 
 	   Connection conn = null;
 	   PreparedStatement ps = null;
