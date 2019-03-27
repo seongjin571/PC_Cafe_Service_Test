@@ -129,8 +129,9 @@ public class Join extends JFrame   {
 				}
 				else{//위의 모든 경우를 만족하는 경우에는 오류 메시지 출력 없음
 					status.setText("");
-					user u = new user(0,id.getText(), pw.getText(), email.getText(), 0);
+					user u = new user(id.getText(), pw.getText(), email.getText(), 0);
 					u_inf.addMember(u);
+					dispose();
 				}
 			}
 		});

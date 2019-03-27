@@ -10,11 +10,11 @@ public class user {
    public user(){
       
    }
-   public user(int id, String u_id, String u_pw, String u_email, int u_price){
-      this.id = id;
+   public user(String u_id, String u_pw, String u_email, int u_price){
+      //this.id = id;
       this.u_id = u_id;
       this.u_pw = u_pw;
-      this.u_pw = u_email;
+      this.u_email = u_email;
       this.u_price = u_price;
    }
    public int getId() {

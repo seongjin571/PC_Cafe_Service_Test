@@ -27,7 +27,9 @@ public class GUI extends JFrame {
 	JButton b1, b2;
 	JTextArea content;
 	KeyListener keyListener;
+	user_inf u_inf = new user_inf();
 	Image img = null;
+	
 	public GUI() {
 		super("Login"); //창 이름 Login
 		setLayout(null); //레이아웃 내가 원하는 위치로
@@ -107,22 +109,30 @@ public class GUI extends JFrame {
 				//dispose();//login 창 삭제
 				if((JButton) obj1 == b1) {// login버튼이 눌리면
 					
-					status.setText(id.getText()+" "+pw.getText());
-					Menu j3 = new Menu("Menu");// 새 Menu 창 생성
-					j3.setVisible(true);
-					j3.setSize(882, 600);//크기 설정
-					j3.setLocation(500, 100);//생성될 위치 설정
-					j3.addWindowListener(new WindowAdapter() {//x누르면 새창만 종료되게
-						public void windowClosing(WindowEvent e) {
-							j3.setVisible(false);
-							j3.dispose();//Menu 창 종료
-						}
-					});
+					int n =u_inf.login(id.getText(),pw.getText());
+					if(n == 2)
+						status.setText("pw를 확인해주십시오");
+					else if(n == 3)
+						status.setText("id를 확인해주십시오");
+					else  {
+						status.setText(id.getText()+" "+pw.getText());
+						Menu j3 = new Menu("Menu");// 새 Menu 창 생성
+						j3.setVisible(true);
+						j3.setSize(882, 600);//크기 설정
+						j3.setLocation(500, 100);//생성될 위치 설정
+						j3.addWindowListener(new WindowAdapter() {//x누르면 새창만 종료되게
+							public void windowClosing(WindowEvent e) {
+								j3.setVisible(false);
+								j3.dispose();//Menu 창 종료
+							}
+						});
+					}
 				}
 			}
 		});	
 		
-		status.setBounds(300, 820, 150, 40);
+		status.setBounds(240, 820, 150, 40);
+		status.setHorizontalAlignment(JTextField.CENTER);//가운데정렬
 		add(status);// id+pw 인 status 설정 후 삽입
 		
 		b2.addActionListener(new ActionListener() {//join버튼 클릭시 발생하는 액션
