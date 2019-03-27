@@ -1,7 +1,7 @@
 create database java_study;
 
 use java_study;
-//java_study database 생성 후 사용
+
 
 create table stock(
         name varchar(10) primary key,
@@ -18,7 +18,7 @@ insert into stock values ("홈런볼", 10);
 insert into stock values ("핫도그", 10);
 insert into stock values ("누네띠네", 10);
 insert into stock values ("건빵", 10);
-//재고 테이블 생성
+
 
  create table food(
         id int primary key auto_increment,
@@ -37,4 +37,3 @@ insert into food values (8,"홈런볼", 2000, "홈런볼");
 insert into food values (9,"핫도그", 2000, "빵,소세지");
 insert into food values (10,"누네띠네", 1000, "누네띠네");
 insert into food values (11,"건빵", 1000, "건빵");
-//음식 테이블 생성

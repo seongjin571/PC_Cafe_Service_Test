@@ -1,5 +1,6 @@
 package javaProject;
 
+import java.util.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,17 +15,23 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import jdbc.dto.user;
+import jdbc.dao.*;
+import jdbc.dto.*;
+
 public class Join extends JFrame   {
 	JLabel lb1, la1, la2, la3, la4, status;
 	JTextField id, pw, pw2, email;
 	JPanel idPanel, paPanel, pa2Panel, emPanel;
 	JButton b1, b2;
 	ActionEvent e;
-	
+	int flag=0;
+	user_inf u_inf = new user_inf();
+
 	Join(String str){
 		super(str);
 		setLayout(null); //레이아웃 내가 원하는 위치로
-		
+
 		J_idpw();
 		J_button();
 	}
@@ -36,12 +43,12 @@ public class Join extends JFrame   {
 		pa2Panel = new JPanel();
 		emPanel = new JPanel();
 
-		la1 = new JLabel("ID     ");
+		la1 = new JLabel("ID");
 		la1.setFont(new Font("",Font.BOLD, 20));
-		la2 = new JLabel("PW    ");
+		la2 = new JLabel("PW");
 		la2.setFont(new Font("",Font.BOLD, 20));
-		la3 = new JLabel("PW2  ");
-		la3.setFont(new Font("",Font.BOLD, 20));
+		la3 = new JLabel("PW 확인");
+		la3.setFont(new Font("",Font.BOLD,20));
 		la4 = new JLabel("E-mail");
 		la4.setFont(new Font("",Font.BOLD, 20));//ID, PW 등 글자 설정
 		
@@ -58,17 +65,17 @@ public class Join extends JFrame   {
 		
 		idPanel.add(la1);
 		idPanel.add(id);
-		idPanel.setBounds(80, 140, 300, 60);
+		idPanel.setBounds(96, 140, 300, 60);
 		add(idPanel);// ID글자와 박스 삽입
 
 		paPanel.add(la2);
 		paPanel.add(pw);
-		paPanel.setBounds(80, 220, 300, 60);
+		paPanel.setBounds(91, 220, 300, 60);
 		add(paPanel);// PW글자와 박스 삽입
 
 		pa2Panel.add(la3);
 		pa2Panel.add(pw2);
-		pa2Panel.setBounds(80, 300, 300, 60);
+		pa2Panel.setBounds(42, 300, 350, 60);
 		add(pa2Panel);// pw2글자와 박스 삽입
 		
 		emPanel.add(la4);
@@ -93,22 +100,65 @@ public class Join extends JFrame   {
 		b2.setForeground(new Color(255,255,255));
 		
 		add(b1);
-		add(b2);//LOGIN, JOIN 버튼 설정 후 삽입
+		add(b2);//중복, JOIN 버튼 설정 후 삽입
 		
 		status = new JLabel();
 		b2.addActionListener(new ActionListener() {//JOIN버튼 클릭시 발생하는 액션
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!(pw.getText().equals(pw2.getText()))) {//pw의 값과 pw2의 값이 같지 않으면
+				
+				if(id.getText().equals("")) {//id 입력 안된 경우
+					status.setText("id를 입력해 주십시오.");
+				}
+				else if(flag==0) {//id 중복 확인 안한 경우
+					status.setText("id 중복을 확인해 주십시오.");
+				}
+				else if(pw.getText().equals("")) {//pw 입력 안된 경우
+					status.setText("pw를 입력해 주십시오.");
+				}
+				else if(pw2.getText().equals("")) {//pw 입력 안된 경우
+					status.setText("pw를 확인해 주십시오.");
+				}
+				else if(email.getText().equals("")) {//이메일이 입력 안된 경우
+					status.setText("이메일을 입력해 주십시오.");
+				}
+				
+				else if(!(pw.getText().equals(pw2.getText()))) {//pw의 값과 pw2의 값이 같지 않으면
 					status.setText("비밀번호가 일치하지 않습니다.");
+				}
+				else{//위의 모든 경우를 만족하는 경우에는 오류 메시지 출력 없음
+					status.setText("");
+					user u = new user(0,id.getText(), pw.getText(), email.getText(), 0);
+					u_inf.addMember(u);
 				}
 			}
 		});
 		
-
-		status.setBounds(190,520,200,40);
+	
+		
+		b1.addActionListener(new ActionListener() {//중복버튼 클릭시 발생하는 액션
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				flag=1;//중복 확인 했다는 의미
+				
+				int n = u_inf.compareID(id.getText());
+				if(n == -1)
+					status.setText("이미 존재하는 ID입니다.");
+				else
+					status.setText("사용 가능한 ID입니다.");
+		
+			}
+		});
+		
+		status.setFont(new Font("",Font.PLAIN,15));
+		status.setHorizontalAlignment(JTextField.CENTER);//가운데정렬
+		status.setBounds(153,520,240,40);
 		add(status);// id+pw 인 status 설정 후 삽입
+		
+		
 	}
 
 	
