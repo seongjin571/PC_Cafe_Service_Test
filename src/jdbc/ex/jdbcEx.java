@@ -9,11 +9,8 @@ public class jdbcEx {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-<<<<<<< HEAD
+
 		String menu="진라면";//메뉴가 주문되었다고 가정
-=======
-		String menu="핫도그";//메뉴가 주문되었다고 가정
->>>>>>> b53de909580370ac63681362dce5f27b6734dcae
 		PCDao PCDao=new PCDao();
 		Food food=PCDao.getFood(menu);
 		System.out.println(food);
