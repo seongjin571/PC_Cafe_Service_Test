@@ -19,6 +19,8 @@ public class jdbcEx {
 			PCDao.useStock(ingredient[i]);//재고 수를 한 개씩 줄여줌
 		}
 		//실행 후 stock table 확인하면 해당 재고 수가 하나씩 감소함
+		managerGUI stock=new managerGUI();
+		stock.showStock();
 	}
 
 }
