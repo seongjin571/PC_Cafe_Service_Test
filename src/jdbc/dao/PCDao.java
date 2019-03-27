@@ -1,5 +1,6 @@
 package jdbc.dao;
 
+<<<<<<< HEAD
 import java.awt.*;
 import java.sql.*;
 import java.util.*;
@@ -10,6 +11,15 @@ import jdbc.dto.Food;
 import jdbc.dto.Stock;
 
 public class PCDao extends JFrame{
+=======
+import java.sql.*;
+import java.util.*;
+
+import jdbc.dto.Food;
+import jdbc.dto.Stock;
+
+public class PCDao {
+>>>>>>> b53de909580370ac63681362dce5f27b6734dcae
 	private static String dburl = "jdbc:mysql://localhost/java_study?characterEncoding=UTF-8&serverTimezone=UTC";
 	 private static String dbUser = "root";
 	 private static String dbpasswd = "16010948";
@@ -72,6 +82,7 @@ public class PCDao extends JFrame{
 		   return food;
 	   }
 	   public int useStock(String ingredient) {
+<<<<<<< HEAD
 		   
 		   int count=0;
 		   int result=0;
@@ -86,6 +97,10 @@ public class PCDao extends JFrame{
 	       setLayout(new BorderLayout());
 	       contentPane = getContentPane();
 		   
+=======
+		   int count=0;
+		   int result=0;
+>>>>>>> b53de909580370ac63681362dce5f27b6734dcae
 		   try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn=DriverManager.getConnection(dburl,dbUser,dbpasswd);
@@ -100,6 +115,7 @@ public class PCDao extends JFrame{
 			ps= conn.prepareStatement(sql);
 			ps.setObject(1, ingredient);
 			result=ps.executeUpdate();
+<<<<<<< HEAD
 			
 			sql= "select name,count from stock";
 			ps= conn.prepareStatement(sql);
@@ -137,6 +153,10 @@ public class PCDao extends JFrame{
             setVisible(true);
             
 			//재료의 재고 수를 한 개 줄임
+=======
+			//재료의 재고 수를 한 개 줄임
+			
+>>>>>>> b53de909580370ac63681362dce5f27b6734dcae
 		   } catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
