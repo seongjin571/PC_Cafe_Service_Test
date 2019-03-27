@@ -9,6 +9,7 @@ import javax.swing.*;
 import jdbc.dao.PCDao;
 import jdbc.dto.Stock;
 
+
 public class managerGUI extends JFrame{
 	 
 	   public void showStock() {

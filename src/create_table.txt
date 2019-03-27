@@ -5,17 +5,17 @@ create table stock(
         name varchar(10) primary key,
         count int);
 
-insert into stock values ("¿øµÎ", 10);
-insert into stock values ("¿ìÀ¯", 10);
-insert into stock values ("¾ÆÀÌ½ºÆ¼", 10);
-insert into stock values ("Áø¶ó¸é", 10);
-insert into stock values ("Â¥ÆÄ°ÔÆ¼", 10);
-insert into stock values ("»õ¿ì±ø", 10);
-insert into stock values ("È¨·±º¼", 10);
-insert into stock values ("»§", 10);
-insert into stock values ("¼Ò¼¼Áö", 10);
-insert into stock values ("´©³×¶ì³×", 10);
-insert into stock values ("°Ç»§", 10);
+insert into stock values ("ì›ë‘", 10);
+insert into stock values ("ìš°ìœ ", 10);
+insert into stock values ("ì•„ì´ìŠ¤í‹°", 10);
+insert into stock values ("ì§„ë¼ë©´", 10);
+insert into stock values ("ì§œíŒŒê²Œí‹°", 10);
+insert into stock values ("ìƒˆìš°ê¹¡", 10);
+insert into stock values ("í™ˆëŸ°ë³¼", 10);
+insert into stock values ("ë¹µ", 10);
+insert into stock values ("ì†Œì„¸ì§€", 10);
+insert into stock values ("ëˆ„ë„¤ë ë„¤", 10);
+insert into stock values ("ê±´ë¹µ", 10);
 
  create table food(
         name varchar(10) not null,
@@ -23,13 +23,13 @@ insert into stock values ("°Ç»§", 10);
         ingredients varchar(32));
 
 
-insert into food values ("Ä«Æä¶ó¶¼", 3000, "¿øµÎ,¿ìÀ¯");
-insert into food values ("¾Æ¸Ş¸®Ä«³ë", 2000, "¿øµÎ");
-insert into food values ("¾ÆÀÌ½ºÆ¼", 2000, "¾ÆÀÌ½ºÆ¼");
-insert into food values ("Áø¶ó¸é", 2000, "Áø¶ó¸é");
-insert into food values ("Â¥ÆÄ°ÔÆ¼", 2000, "Â¥ÆÄ°ÔÆ¼");
-insert into food values ("»õ¿ì±ø", 1000, "»õ¿ì±ø");
-insert into food values ("È¨·±º¼", 2000, "È¨·±º¼");
-insert into food values ("ÇÖµµ±×", 2000, "»§,¼Ò¼¼Áö");
-insert into food values ("´©³×¶ì³×", 1000, "´©³×¶ì³×");
-insert into food values ("°Ç»§", 1000, "°Ç»§");
+insert into food values ("ì¹´í˜ë¼ë–¼", 3000, "ì›ë‘,ìš°ìœ ");
+insert into food values ("ì•„ë©”ë¦¬ì¹´ë…¸", 2000, "ì›ë‘");
+insert into food values ("ì•„ì´ìŠ¤í‹°", 2000, "ì•„ì´ìŠ¤í‹°");
+insert into food values ("ì§„ë¼ë©´", 2000, "ì§„ë¼ë©´");
+insert into food values ("ì§œíŒŒê²Œí‹°", 2000, "ì§œíŒŒê²Œí‹°");
+insert into food values ("ìƒˆìš°ê¹¡", 1000, "ìƒˆìš°ê¹¡");
+insert into food values ("í™ˆëŸ°ë³¼", 2000, "í™ˆëŸ°ë³¼");
+insert into food values ("í•«ë„ê·¸", 2000, "ë¹µ,ì†Œì„¸ì§€");
+insert into food values ("ëˆ„ë„¤ë ë„¤", 1000, "ëˆ„ë„¤ë ë„¤");
+insert into food values ("ê±´ë¹µ", 1000, "ê±´ë¹µ");

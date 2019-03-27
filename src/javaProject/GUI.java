@@ -1,5 +1,6 @@
 package javaProject;
 
+import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -11,16 +12,21 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.border.*;
 
+import jdbc.dto.user;
+import jdbc.dao.*;
+import jdbc.dto.*;
 
-public class GUI extends JFrame{
+
+
+public class GUI extends JFrame {
 	JLabel lb1, la1, la2, la3, la4, status;
 	JTextField id, pw;
 	JPanel idPanel, paPanel, loginPanel;
 	JButton b1, b2;
 	JTextArea content;
+	KeyListener keyListener;
 	Image img = null;
 	public GUI() {
 		super("Login"); //창 이름 Login
@@ -31,6 +37,8 @@ public class GUI extends JFrame{
 		idpw();
 		
 		Button();
+		
+		esc();
 		
 		setSize(650,900);//전체 창 크기 설정
 		setVisible(true);
@@ -91,15 +99,28 @@ public class GUI extends JFrame{
 		add(b2);//LOGIN, JOIN 버튼 설정 후 삽입
 		
 		status = new JLabel();// id+pw 보여줄 label;
-		b1.addActionListener(new ActionListener() {//login버튼 클릭시 발생하는 액션
-			
+		
+		b1.addActionListener(new ActionListener() {//login버튼 클릭시 발생하는 액션정의	
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String u_id = id.getText();//입력 된 id 가져오기
-				String u_pw = pw.getText();//입력 된 pw 가져오기
-				status.setText(u_id+" "+u_pw);// 확인용; id+pw로 status 설정
+				Object obj1 = e.getSource();
+				//dispose();//login 창 삭제
+				if((JButton) obj1 == b1) {// login버튼이 눌리면
+					
+					status.setText(id.getText()+" "+pw.getText());
+					Menu j3 = new Menu("Menu");// 새 Menu 창 생성
+					j3.setVisible(true);
+					j3.setSize(882, 600);//크기 설정
+					j3.setLocation(500, 100);//생성될 위치 설정
+					j3.addWindowListener(new WindowAdapter() {//x누르면 새창만 종료되게
+						public void windowClosing(WindowEvent e) {
+							j3.setVisible(false);
+							j3.dispose();//Menu 창 종료
+						}
+					});
+				}
 			}
-		});
+		});	
 		
 		status.setBounds(300, 820, 150, 40);
 		add(status);// id+pw 인 status 설정 후 삽입
@@ -108,17 +129,17 @@ public class GUI extends JFrame{
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Object obj = e.getSource();
+				Object obj2 = e.getSource();
 				
-				if((JButton) obj == b2) {// join버튼이 눌리면
-					Join j2 = new Join("Join");// 새 join 생성
+				if((JButton) obj2 == b2) {// join버튼이 눌리면
+					Join j2 = new Join("Join");// 새 join 창 생성
 					j2.setVisible(true);
 					j2.setSize(550, 620);//크기 설정
 					j2.setLocation(500, 100);//생성될 위치 설정
 					j2.addWindowListener(new WindowAdapter() {//x누르면 새창만 종료되게
 						public void windowClosing(WindowEvent e) {
 							j2.setVisible(false);
-							j2.dispose();
+							j2.dispose();//Join 창 종료
 						}
 					});
 				}
@@ -126,12 +147,37 @@ public class GUI extends JFrame{
 		});
 		
 	}
-	
-	
+	void esc() {
+		keyListener = new KeyListener() {
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==27)
+					dispose();
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+			// 	TODO Auto-generated method stub
+			
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			// 	TODO Auto-generated method stub
+			
+			}
+
+		};
+		addKeyListener(keyListener);
+	}
+
+
 	public static void main(String[] args) {
 		GUI j1 = new GUI();
 		
 		
 	}
+
 	
 }
