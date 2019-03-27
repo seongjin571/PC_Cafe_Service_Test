@@ -10,7 +10,7 @@ public class jdbcEx {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		String menu="진라면";//메뉴가 주문되었다고 가정
+		String menu="아이스티";//메뉴가 주문되었다고 가정
 		PCDao PCDao=new PCDao();
 		Food food=PCDao.getFood(menu);
 		System.out.println(food);
