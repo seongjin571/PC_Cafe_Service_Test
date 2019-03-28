@@ -1,6 +1,8 @@
 package AdminChat;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -11,14 +13,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 class SFrame extends JFrame implements ActionListener {
-	JButton button, but_input;
+	private static final long serialVersionUID = 1L;
+	JButton but_input;
 	JTextArea ta;
 	JTextField tf;
+	JLabel name;
+	Font f1;
 	static ServerSocket serverSocket = null;
 	static Socket clientSocket = null;
 	static PrintWriter out;
@@ -26,18 +32,19 @@ class SFrame extends JFrame implements ActionListener {
 	static String inputLine, outputLine;
 
 	public SFrame() {
-		setSize(1000, 1000);
+		setSize(550, 600);
+		f1 = new Font("돋움", Font.BOLD, 30);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("에코 서버");
+		setTitle("SeJong Pc Cafe");
 		JPanel panel = new JPanel();
-		button = new JButton("관리자 채팅방");
-		button.addActionListener(this);
+		name = new JLabel("SeJong Pc Cafe 관리자 채팅방");
+		name.setFont(f1);
 		JPanel panel2 = new JPanel();
-		ta = new JTextArea(30, 30);
-		tf = new JTextField(30);
+		ta = new JTextArea(25, 40);
+		tf = new JTextField(20);
 		but_input = new JButton("입력");
 		but_input.addActionListener(this);
-		panel2.add(button);
+		panel2.add(name);
 		panel.add(ta);
 		panel.add(tf);
 		panel.add(but_input);
@@ -49,18 +56,16 @@ class SFrame extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String s;
-		s = "서버 : " + tf.getText();
+		s = "관리자 : " + tf.getText();
 		if (arg0.getSource() == but_input) {
 			ta.append(s + "\n");
 			out.println(s);
 			tf.setText("");
 		}
-		if (arg0.getSource() == button) {
-		}
 	}
 
 	public void serverStart() throws IOException {
-		System.out.println("서버 시작!haha");
+		System.out.println("서버 시작!");
 		try {
 			serverSocket = new ServerSocket(5555);
 		} catch (IOException e) {
@@ -76,9 +81,7 @@ class SFrame extends JFrame implements ActionListener {
 		}
 		out = new PrintWriter(clientSocket.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		outputLine = "서버 : 접속 환영합니다";
-		out.println(outputLine);
-		ta.append("서버 메시지 : 클라이언트가 접속되었습니다.\n");
+		ta.append("클라이언트가 접속되었습니다.\n");
 		while ((inputLine = in.readLine()) != null) {
 			String s = inputLine + "\n";
 			System.out.println(s);
