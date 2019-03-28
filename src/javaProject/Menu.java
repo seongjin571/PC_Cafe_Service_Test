@@ -1,32 +1,24 @@
 package javaProject;
 
 import java.util.*;
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
-import java.awt.Color;
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
+import javax.swing.*;
 import jdbc.dao.*;
 import jdbc.dto.*;
 
 public class Menu extends JFrame{
 	
-	JLabel status, ice_hot, size, shot;
+	JLabel status0, status1, status2, status3, ice_hot, size, shot;
 	JPanel background, choice1, choice2, choice3;
-	JButton b1, b2, b3, s1, s2, s3, s4, s5, s6, s7, chat, cancle, pay;
-	Checkbox ice, hot, small, tall, large, yes, no;
-	CheckboxGroup group1, group2, group3;
+	JButton b[], chat, cancle, pay;
+	JRadioButton ice, hot, small, tall, large, yes, no;
+	ButtonGroup group1, group2, group3;
+	int i, b_price=0, s_price=0;
 	
 	Menu(String str){
 		super(str);
@@ -38,74 +30,114 @@ public class Menu extends JFrame{
 		add(background);
 		
 		M_button();
+		M_order(b);
 		M_choice();
 		M_chat();
 	}
 	
 	void M_button() {
+		b = new JButton[10];
 		
-		b1 = new JButton("아메리카노");
-		b2 = new JButton("카페라떼");
-		b3 = new JButton("아이스티");
-		s1 = new JButton("진라면");
-		s2 = new JButton("짜파게티");
-		s3 = new JButton("새우깡");
-		s4 = new JButton("홈런볼");
-		s5 = new JButton("누네띠네");
-		s6 = new JButton("건빵");
-		s7 = new JButton("핫도그");//메뉴 버튼 생성
+		b[0] = new JButton("아메리카노");
+		b[1] = new JButton("카페라떼");
+		b[2] = new JButton("아이스티");
+		b[3] = new JButton("진라면");
+		b[4] = new JButton("짜파게티");
+		b[5] = new JButton("새우깡");
+		b[6] = new JButton("홈런볼");
+		b[7] = new JButton("누네띠네");
+		b[8] = new JButton("건빵");
+		b[9] = new JButton("핫도그");//메뉴 버튼 생성
 		
-		b1.setBounds(50,50,100,70);
-		b2.setBounds(215,50,100,70);
-		b3.setBounds(380,50,100,70);
-		s1.setBounds(545,50,100,70);
-		s2.setBounds(710,50,100,70);
-		s3.setBounds(50,170,100,70);
-		s4.setBounds(215,170,100,70);
-		s5.setBounds(380,170,100,70);
-		s6.setBounds(545,170,100,70);
-		s7.setBounds(710,170,100,70);//위치, 크기 설정
+		for(i = 0 ; i < 5 ; i++)
+			b[i].setBounds(50+(165)*i,50,100,70);
+		
+		for(i = 5 ; i < 10 ; i++)
+			b[i].setBounds(50+(165)*(i-5),170,100,70);//위치, 크기 설정
 
-		add(b1);
-		add(b2);
-		add(b3);
-		add(s1);
-		add(s2);
-		add(s3);
-		add(s4);
-		add(s5);
-		add(s6);
-		add(s7);//메뉴 버튼 삽입
+		for(i = 0 ; i < 10 ; i++)
+			add(b[i]);//메뉴 버튼 삽입
 		
 		
-		cancle = new JButton("Cancle");
-		pay = new JButton("Pay");
+			
+
 		
-		cancle.setBounds(490, 450, 100, 50);
-		pay.setBounds(680, 450, 100, 50);
-		
-		add(cancle);
-		add(pay);
 	}
-	
+	void M_order(JButton b[]) {
+		status0 = new JLabel();
+		status1 = new JLabel();
+		status2 = new JLabel();
+		status3 = new JLabel();
+		
+		b[0].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[0].getText());
+				status0.setBounds(500,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		b[1].addActionListener(new ActionListener() {//카페라떼 클릭시 발생하는 액션	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[1].getText());
+				status0.setBounds(500,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		b[2].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[2].getText());
+				status0.setBounds(500,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		
+		
+		
+	}
 	void M_choice() {
 		
 		choice1 = new JPanel();
 		choice2 = new JPanel();
 		choice3 = new JPanel();
 		
-		group1 = new CheckboxGroup();
-		ice = new Checkbox("ICE", group1, true);
-		hot = new Checkbox("HOT", group1, false);//ice, hot 라디오버튼 생성
+		group1 = new ButtonGroup();
+		ice = new JRadioButton("ICE");
+		hot = new JRadioButton("HOT");
+		group1.add(ice);
+		group1.add(hot);//ice, hot 라디오버튼 생성
 		
-		group2 = new CheckboxGroup();
-		small = new Checkbox("SMALL", group2, true);
-		tall = new Checkbox("TALL", group2, false);
-		large = new Checkbox("LARGE", group2, false);//s,t,l 라디오버튼 생성
+		group2 = new ButtonGroup();
+		small = new JRadioButton("SMALL");
+		tall = new JRadioButton("TALL");
+		large = new JRadioButton("LARGE");
+		group2.add(small);
+		group2.add(tall);
+		group2.add(large);//s,t,l 라디오버튼 생성
 		
-		group3 = new CheckboxGroup();
-		yes = new Checkbox("YES", group3, true);
-		no = new Checkbox("NO", group3, false);//shot 라디오버튼 생성
+		group3 = new ButtonGroup();
+		yes = new JRadioButton("YES");
+		no = new JRadioButton("NO");
+		group3.add(yes);
+		group3.add(no);//shot 라디오버튼 생성
 		
 		ice_hot = new JLabel("ICE / HOT");
 		size = new JLabel("SIZE");
@@ -128,16 +160,113 @@ public class Menu extends JFrame{
 		choice3.add(yes);
 		choice3.add(no);//panel에 더하기
 		
-		choice1.setBounds(100,330,200,60);
-		choice2.setBounds(500,330,250,80);
-		choice3.setBounds(110,380,200,60);//panel 위치,크기 설정
+		choice1.setBounds(100,330,200,30);
+		choice2.setBounds(500,330,250,30);
+		choice3.setBounds(110,380,200,30);//panel 위치,크기 설정
 		
 		add(choice1);
 		add(choice2);
 		add(choice3);//삽입
 		
-		status = new JLabel();
-			
+
+		hot.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				status2.setText("");
+				status3.setText("");
+				status1.setText(status0.getText());
+				status1.setText(status1.getText()+"/ HOT");
+			}
+		});
+		
+		ice.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				status2.setText("");
+				status3.setText("");
+				status1.setText(status0.getText());
+				status1.setText(status1.getText()+"/ ICE");
+			}
+		});	
+		status1.setBounds(500,370,300,80);
+		status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+		add(status1);
+	
+		small.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				b_price=0;
+				status3.setText("");
+				status2.setText(status1.getText());
+				status2.setText(status2.getText()+"/ SMALL");
+				b_price+=1000;
+			}
+		});
+		
+		tall.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				b_price=0;
+				status3.setText("");
+				status2.setText(status1.getText());
+				status2.setText(status2.getText()+"/ TALL");
+				b_price+=1500;
+			}
+		});
+		
+		large.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				b_price=0;
+				status3.setText("");
+				status2.setText(status1.getText());
+				status2.setText(status2.getText()+"/ LARGE");
+				b_price+=2000;
+			}
+		});
+		status2.setBounds(500,370,300,80);
+		status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+		add(status2);
+		
+		yes.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				status3.setText(status2.getText());
+				status3.setText(status3.getText()+"/ YES");
+				status3.setText(status3.getText()+"/ "+b_price+"원");
+
+				
+			}
+		});
+
+		no.addItemListener(new ItemListener(){
+			public void itemStateChanged(ItemEvent e) {
+				status3.setText(status2.getText());
+				status3.setText(status3.getText()+"/ NO");
+				status3.setText(status3.getText()+"/ "+b_price+"원");
+
+			}
+		});
+		status3.setBounds(500,370,300,80);
+		status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+		add(status3);
+		
+		cancle = new JButton("Cancle");
+		pay = new JButton("Pay");
+		
+		cancle.setBounds(490, 450, 100, 50);
+		pay.setBounds(680, 450, 100, 50);
+		
+		add(cancle);
+		add(pay);
+		
+		cancle.addActionListener(new ActionListener() {//cancle 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				
+			}			
+		});
+		
+		
+		
 	}
 	
 	void M_chat() {
