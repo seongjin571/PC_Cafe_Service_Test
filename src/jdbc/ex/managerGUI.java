@@ -1,29 +1,47 @@
 package jdbc.ex;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import jdbc.dao.PCDao;
 import jdbc.dto.Stock;
 
 
-public class managerGUI extends JFrame{
-	 
+public class managerGUI extends JFrame implements ActionListener, WindowListener{
+	 	
+	   JPanel contentPane,grid1,grid2;
+	   JButton btn1,btn2,btn3;
+	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
+	   JButton btn15,btn16,btn17,btn18;
+	   BufferedImage img;
+	   JLabel la1,la2,label,la3;
+	   JTextField text;
+	   
 	   public void showStock() {
 		   
 		   Object[] colNames; // 열이름 => 1차원 배열
 	       Object[][] data; // 2차원 배열 데이터
-	       Container contentPane;
-	       JLabel la;
+	       
+	       
+		   contentPane=new JPanel();
 		   
 	       setTitle("재고 관리 프로그램");
-	       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	       addWindowListener(this);
 	    
-	       setLayout(new BorderLayout());
-	       contentPane = getContentPane();
+	       setLayout(null);
 	       
 	       PCDao dao=new PCDao();
 		   ArrayList<Stock> list=dao.getStock();
@@ -45,20 +63,182 @@ public class managerGUI extends JFrame{
 				data[0][r]=list.get(r).getCount();
 			}            
 			
-			la=new JLabel("재고 현황");
-            
-            
-			contentPane.add(la,BorderLayout.NORTH);
+			la1=new JLabel("재고 현황");
+			la1.setBounds(35 , 5, 100, 50);
+			add(la1);
             
 			// 테이블 생성
 			JTable table = new JTable(data, colNames);
-			// 테이블을 프레임 컨텐트팬 중앙에 붙이기
-			contentPane.add(new JScrollPane(table));
-			// 두번째 추가한 요소부터는 setVisible해야지만 새로 추가한 요소가 출력됨
-            
-			table.setBounds(50, 50, 500, 500);
-            
-			setSize(1000, 500);
+			JScrollPane j = new JScrollPane(table);
+			j.setBounds(35, 50, 900, 150);
+	        add(j);
+	        
+	        la2=new JLabel("물품주문");
+			la2.setBounds(35 , 200, 100, 50);
+			add(la2);
+			
+			grid1=new JPanel();
+			grid1.setLayout(new GridLayout(2,5,30,30));
+			
+			btn4=new JButton("건빵");
+			btn5=new JButton("누네띠네");
+			btn6=new JButton("빵");
+			btn7=new JButton("새우깡");
+			btn8=new JButton("소세지");
+			btn9=new JButton("아이스티");
+			btn10=new JButton("우유");
+			btn11=new JButton("원두");
+			btn12=new JButton("진라면");
+			btn13=new JButton("짜파게티");
+			btn14=new JButton("홈런볼");
+			
+			label=new JLabel();
+			label.setBounds(35, 475, 500, 50);
+			la3=new JLabel();
+			la3.setBounds(35, 520, 500, 50);
+			text=new JTextField(5);
+			text.setBounds(130, 525, 300, 40);
+			grid1.add(btn4);
+			btn4.addActionListener(this);
+			grid1.add(btn5);
+			btn5.addActionListener(this);
+			grid1.add(btn6);
+			btn6.addActionListener(this);
+			grid1.add(btn7);
+			btn7.addActionListener(this);
+			grid1.add(btn8);
+			btn8.addActionListener(this);
+			grid1.add(btn9);
+			btn9.addActionListener(this);
+			grid1.add(btn10);
+			btn10.addActionListener(this);
+			grid1.add(btn11);
+			btn11.addActionListener(this);
+			grid1.add(btn12);
+			btn12.addActionListener(this);
+			grid1.add(btn13);
+			btn13.addActionListener(this);
+			grid1.add(btn14);
+			btn14.addActionListener(this);
+			add(label);
+			add(la3);
+			grid1.setBounds(35, 250, 900, 200);
+			
+			add(grid1);
+			
+			grid2=new JPanel();
+			grid2.setLayout(new GridLayout(1,4,30,30));
+			
+			btn15=new JButton("POS");
+			btn16=new JButton("주문");
+			btn17=new JButton("판매현황");
+			btn18=new JButton("초기화");
+			
+			grid2.add(btn15);
+			grid2.add(btn16);
+			grid2.add(btn17);
+			grid2.add(btn18);
+			
+			grid2.setBounds(35, 600, 900, 80);
+			
+			add(grid2);
+			
+			setSize(1000, 800);
+			setLocation(800,10);
 			setVisible(true); 	            			   
 	   }
+	   
+	   public void managerWindow() {
+		   
+	       setTitle("관리자");
+	       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	       contentPane=new JPanel();
+	       setLayout(null);
+	       
+	       ImageIcon icon=new ImageIcon("src\\\\images\\\\sejong.png");
+	       JLabel picLabel=new JLabel(icon);
+	       picLabel.setBounds(35, 10, 550, 550);
+		   add(picLabel);
+			
+	        btn1=new JButton("판매현황");
+	        btn1.setBounds(80, 630, 100, 40);
+	        add(btn1);
+	        btn1.addActionListener(this);
+			btn2=new JButton("재고관리");
+			btn2.setBounds(260, 630, 100, 40);
+			add(btn2);
+			btn2.addActionListener(this);
+			btn3=new JButton("채팅");
+			btn3.setBounds(440, 630, 100, 40);
+	        add(btn3);
+			btn3.addActionListener(this);
+			
+			
+	       
+	         
+	       setSize(650,900);
+	       setLocation(0,10);
+	       setVisible(true);
+	   
+	   }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource()==btn1) new managerGUI().showStock();
+		else if(e.getSource()==btn2) new managerGUI().showStock();
+		else if(e.getSource()==btn3) new managerGUI().showStock();
+		
+		
+		if(e.getSource()==btn4 || e.getSource()==btn5 || e.getSource()==btn6 || e.getSource()==btn7 || e.getSource()==btn8 || e.getSource()==btn9 ||e.getSource()==btn10 ||e.getSource()==btn11 || e.getSource()==btn12 || e.getSource()==btn13 || e.getSource()==btn14) {
+			label.setText(e.getActionCommand()+"을/를 주문하실건가요? 수량을 입력하세요.");
+			la3.setText("주문수량입력:");
+			add(text);
+		}
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+	   
+	
 }
