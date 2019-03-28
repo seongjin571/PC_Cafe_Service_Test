@@ -136,11 +136,10 @@ public class user_inf {
 					else
 						result = 2;// id만 일치
 				}
-				else
-					result = 3;// id, pw 둘다 불일치
-				
 			}
-			
+			else {
+				result = 3;// id, pw 둘다 불일치
+			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
