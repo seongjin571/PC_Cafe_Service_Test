@@ -40,8 +40,6 @@ public class GUI extends JFrame {
 		
 		Button();
 		
-		esc();
-		
 		setSize(650,900);//전체 창 크기 설정
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);//x눌렀을 때 종료
@@ -108,13 +106,12 @@ public class GUI extends JFrame {
 				Object obj1 = e.getSource();
 				//dispose();//login 창 삭제
 				if((JButton) obj1 == b1) {// login버튼이 눌리면
-					
 					int n =u_inf.login(id.getText(),pw.getText());
 					if(n == 2)
 						status.setText("pw를 확인해주십시오");
 					else if(n == 3)
 						status.setText("id를 확인해주십시오");
-					else  {
+					else if(n == 1) {
 						status.setText(id.getText()+" "+pw.getText());
 						Menu j3 = new Menu("Menu");// 새 Menu 창 생성
 						j3.setVisible(true);
@@ -157,32 +154,7 @@ public class GUI extends JFrame {
 		});
 		
 	}
-	void esc() {
-		keyListener = new KeyListener() {
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode()==27)
-					dispose();
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-			// 	TODO Auto-generated method stub
-			
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e) {
-			// 	TODO Auto-generated method stub
-			
-			}
-
-		};
-		addKeyListener(keyListener);
-	}
-
-
+	
 	public static void main(String[] args) {
 		GUI j1 = new GUI();
 		
