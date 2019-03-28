@@ -22,7 +22,7 @@ import jdbc.dto.Stock;
 
 public class managerGUI extends JFrame implements ActionListener, WindowListener{
 	 	
-	   JPanel contentPane,grid1,grid2;
+	   JPanel contentPane,grid1,grid2,grid3;
 	   JButton btn1,btn2,btn3;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
 	   JButton btn15,btn16,btn17,btn18;
@@ -160,20 +160,20 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	       picLabel.setBounds(35, 10, 550, 550);
 		   add(picLabel);
 			
-	        btn1=new JButton("판매현황");
-	        btn1.setBounds(80, 630, 100, 40);
-	        add(btn1);
-	        btn1.addActionListener(this);
-			btn2=new JButton("재고관리");
-			btn2.setBounds(260, 630, 100, 40);
-			add(btn2);
-			btn2.addActionListener(this);
-			btn3=new JButton("채팅");
-			btn3.setBounds(440, 630, 100, 40);
-	        add(btn3);
-			btn3.addActionListener(this);
-			
-			
+		   grid3=new JPanel();
+		   grid3.setLayout(new GridLayout(1,3,50,50));
+	       btn1=new JButton("판매현황");
+	       grid3.add(btn1);
+	       btn1.addActionListener(this);
+	       btn2=new JButton("재고관리");
+	       grid3.add(btn2);
+		   btn2.addActionListener(this);
+		   btn3=new JButton("채팅");
+	       grid3.add(btn3);
+	       btn3.addActionListener(this);
+		
+	       grid3.setBounds(60,600,500,80);
+	       add(grid3);
 	       
 	         
 	       setSize(650,900);
