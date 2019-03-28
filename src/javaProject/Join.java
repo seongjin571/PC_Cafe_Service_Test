@@ -26,6 +26,7 @@ public class Join extends JFrame   {
 	JButton b1, b2;
 	ActionEvent e;
 	int flag=0;
+	String ID;
 	user_inf u_inf = new user_inf();
 
 	Join(String str){
@@ -111,7 +112,7 @@ public class Join extends JFrame   {
 				if(id.getText().equals("")) {//id 입력 안된 경우
 					status.setText("id를 입력해 주십시오.");
 				}
-				else if(flag==0) {//id 중복 확인 안한 경우
+				else if(flag==0||(!id.getText().equals(ID))) {//id 중복 확인 안한 경우
 					status.setText("id 중복을 확인해 주십시오.");
 				}
 				else if(pw.getText().equals("")) {//pw 입력 안된 경우
@@ -142,8 +143,8 @@ public class Join extends JFrame   {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
 				flag=1;//중복 확인 했다는 의미
+				ID=id.getText();//중복 확인한 아이디 저장
 				
 				int n = u_inf.compareID(id.getText());
 				if(n == -1)
