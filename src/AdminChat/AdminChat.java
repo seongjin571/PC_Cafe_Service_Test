@@ -44,7 +44,7 @@ class Sender extends Thread {
 		Scanner scanner = new Scanner(System.in);
 		while(out!=null) {
 			try {
-				out.writeUTF(name+scanner.nextLine());		
+				out.writeUTF("[ªÁ¿Â¥‘]"+scanner.nextLine());		
 			} catch(IOException e) {}
 		}
 	} // run()
