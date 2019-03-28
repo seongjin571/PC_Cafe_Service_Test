@@ -1,72 +1,100 @@
 package AdminChat;
 
-import java.net.*;
-import java.io.*;
-import java.util.Scanner;
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-public class AdminChat {
-	public static void main(String args[]) {
-		ServerSocket serverSocket = null;
-		Socket socket = null;
+class SFrame extends JFrame implements ActionListener {
+	JButton button, but_input;
+	JTextArea ta;
+	JTextField tf;
+	static ServerSocket serverSocket = null;
+	static Socket clientSocket = null;
+	static PrintWriter out;
+	static BufferedReader in;
+	static String inputLine, outputLine;
 
-		try {
-			// 서버소켓을 생성하여 7777번 포트와 결합(bind)시킨다.
-			serverSocket = new ServerSocket(3000);
-			System.out.println("서버가 준비되었습니다.");
-
-			socket = serverSocket.accept();
-
-			Sender   sender   = new Sender(socket);
-			Receiver receiver = new Receiver(socket);
-
-			sender.start();
-			receiver.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	} // main
-} // class
-
-class Sender extends Thread {
-	Socket socket;
-	DataOutputStream out;
-	String name;
-
-	Sender(Socket socket) {
-		this.socket = socket;
-		try {
-			out = new DataOutputStream(socket.getOutputStream());
-			name = "["+socket.getInetAddress()+":"+socket.getPort()+"]";
-		} catch(Exception e) {}
+	public SFrame() {
+		setSize(1000, 1000);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("에코 서버");
+		JPanel panel = new JPanel();
+		button = new JButton("관리자 채팅방");
+		button.addActionListener(this);
+		JPanel panel2 = new JPanel();
+		ta = new JTextArea(30, 30);
+		tf = new JTextField(30);
+		but_input = new JButton("입력");
+		but_input.addActionListener(this);
+		panel2.add(button);
+		panel.add(ta);
+		panel.add(tf);
+		panel.add(but_input);
+		add(panel2, BorderLayout.NORTH);
+		add(panel);
+		setVisible(true);
 	}
 
-	public void run() {
-		Scanner scanner = new Scanner(System.in);
-		while(out!=null) {
-			try {
-				out.writeUTF("[사장님]"+scanner.nextLine());		
-			} catch(IOException e) {}
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		String s;
+		s = "서버 : " + tf.getText();
+		if (arg0.getSource() == but_input) {
+			ta.append(s + "\n");
+			out.println(s);
+			tf.setText("");
 		}
-	} // run()
-}
-
-class Receiver extends Thread {
-	Socket socket;
-	DataInputStream in;
-
-	Receiver(Socket socket) {
-		this.socket = socket;
-		try {
-			in = new DataInputStream(socket.getInputStream());
-		} catch(IOException e) {}
-
+		if (arg0.getSource() == button) {
+		}
 	}
 
-	public void run() {
-		while(in!=null) {
-			try {
-				System.out.println(in.readUTF());
-			} catch(IOException e) {}
+	public void serverStart() throws IOException {
+		System.out.println("서버 시작!haha");
+		try {
+			serverSocket = new ServerSocket(5555);
+		} catch (IOException e) {
+			System.out.println("다음의 포트 번호에 연결할 수 없습니다 : 5555");
+			System.exit(1);
 		}
-	} // run
+		clientSocket = null;
+		try {
+			clientSocket = serverSocket.accept();
+		} catch (IOException e) {
+			System.err.println("accept() 실패 ");
+			System.exit(1);
+		}
+		out = new PrintWriter(clientSocket.getOutputStream(), true);
+		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		outputLine = "서버 : 접속 환영합니다";
+		out.println(outputLine);
+		ta.append("서버 메시지 : 클라이언트가 접속되었습니다.\n");
+		while ((inputLine = in.readLine()) != null) {
+			String s = inputLine + "\n";
+			System.out.println(s);
+			ta.append(s);
+			 outputLine = inputLine;
+			 out.println(outputLine);
+			if (outputLine.equals("quit"))
+				break;
+		}
+	}
 }
+
+public class AdminChat { 
+	public static void main(String[] args) throws IOException { 
+		SFrame f = new SFrame(); 
+		f.serverStart();
+		} 
+	}
+
