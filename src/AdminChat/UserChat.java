@@ -1,6 +1,7 @@
 package AdminChat; 
 
-import java.awt.BorderLayout; 
+import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener; 
 import java.io.BufferedReader; 
@@ -10,29 +11,34 @@ import java.io.PrintWriter;
 import java.net.Socket; 
 import java.net.UnknownHostException; 
 import javax.swing.JButton; 
-import javax.swing.JFrame; 
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel; 
 import javax.swing.JTextArea;
 import javax.swing.JTextField; 
 class ClientFrame extends JFrame implements ActionListener { 
-	JButton button, but_input; 
+	private static final long serialVersionUID = 1L;
+	JButton but_input; 
 	JTextArea ta; 
 	JTextField tf; // out , in 설정 
+	JLabel name;
+	Font f1;
 	static PrintWriter out = null; 
 	static BufferedReader in = null; 
 	public ClientFrame() { 
-		setSize(500, 600); 
-		setTitle("클라이언트 채팅"); 
+		setSize(550, 600); 
+		f1 = new Font("돋움", Font.BOLD, 30);
+		setTitle("SeJong Pc Cafe"); 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		JPanel panel = new JPanel(); 
-		button = new JButton("클라이언트입니다!!"); 
-		button.addActionListener(this); 
+		name = new JLabel("SeJong Pc Cafe 채팅방");
+		name.setFont(f1);
 		JPanel panel2 = new JPanel(); 
-		ta = new JTextArea(30, 30); 
-		tf = new JTextField(30); 
+		ta = new JTextArea(25, 40); 
+		tf = new JTextField(20); 
 		but_input = new JButton("입력"); 
 		but_input.addActionListener(this); 
-		panel2.add(button); 
+		panel2.add(name); 
 		panel.add(ta); 
 		panel.add(tf); 
 		panel.add(but_input); 
@@ -42,7 +48,7 @@ class ClientFrame extends JFrame implements ActionListener {
 		} 
 	@Override public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == but_input) {
-			String s = "클라이언트 : " + tf.getText(); 
+			String s = "손님 : " + tf.getText(); 
 			ta.append(s+"\n"); out.println(s); 
 			tf.setText(""); 
 			} 
@@ -74,6 +80,7 @@ class ClientFrame extends JFrame implements ActionListener {
 	} 
 public class UserChat { 
 	public static void main(String[] args) throws IOException { 
-		ClientFrame f = new ClientFrame(); f.client(); 
+		ClientFrame f = new ClientFrame(); 
+		f.client(); 
 		} 
 }
