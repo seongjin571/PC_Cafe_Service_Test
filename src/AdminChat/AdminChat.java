@@ -62,7 +62,7 @@ class SFrame extends JFrame implements ActionListener {
 			out.println(s);
 			tf.setText("");
 		}
-	}
+	} 
 
 	public void serverStart() throws IOException {
 		System.out.println("서버 시작!");
