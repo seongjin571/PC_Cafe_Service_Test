@@ -104,7 +104,6 @@ public class GUI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object obj1 = e.getSource();
-				//dispose();//login 창 삭제
 				if((JButton) obj1 == b1) {// login버튼이 눌리면
 					int n =u_inf.login(id.getText(),pw.getText());
 					if(n == 2)
@@ -112,7 +111,8 @@ public class GUI extends JFrame {
 					else if(n == 3)
 						status.setText("id를 확인해주십시오");
 					else if(n == 1) {
-						status.setText(id.getText()+" "+pw.getText());
+						dispose();//login 창 삭제
+						
 						Menu j3 = new Menu("Menu");// 새 Menu 창 생성
 						j3.setVisible(true);
 						j3.setSize(882, 600);//크기 설정
