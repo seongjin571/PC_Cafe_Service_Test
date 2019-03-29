@@ -18,7 +18,7 @@ public class Menu extends JFrame{
 	JButton b[], chat, cancle, pay;
 	JRadioButton ice, hot, small, tall, large, yes, no;
 	ButtonGroup group1, group2, group3;
-	int i, b_price=0, s_price=0;
+	int i, b_price=0, s_price=0, flag=0;
 	
 	Menu(String str){
 		super(str);
@@ -30,8 +30,8 @@ public class Menu extends JFrame{
 		add(background);
 		
 		M_button();
-		M_order(b);
-		M_choice();
+		M_border(b);
+		M_sorder(b);
 		M_chat();
 	}
 	
@@ -49,21 +49,16 @@ public class Menu extends JFrame{
 		b[8] = new JButton("건빵");
 		b[9] = new JButton("핫도그");//메뉴 버튼 생성
 		
-		for(i = 0 ; i < 5 ; i++)
-			b[i].setBounds(50+(165)*i,50,100,70);
-		
-		for(i = 5 ; i < 10 ; i++)
-			b[i].setBounds(50+(165)*(i-5),170,100,70);//위치, 크기 설정
-
-		for(i = 0 ; i < 10 ; i++)
-			add(b[i]);//메뉴 버튼 삽입
-		
-		
-			
-
+		for(i = 0 ; i < 10 ; i++) {
+			if(i<5)
+				b[i].setBounds(50+(165)*i,50,100,70);
+			else
+				b[i].setBounds(50+(165)*(i-5),170,100,70);//위치, 크기 설정
+			add(b[i]);
+		}
 		
 	}
-	void M_order(JButton b[]) {
+	void M_border(JButton b[]) {
 		status0 = new JLabel();
 		status1 = new JLabel();
 		status2 = new JLabel();
@@ -72,6 +67,8 @@ public class Menu extends JFrame{
 		b[0].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				M_bchoice();
+
 				status0.setText("");
 				status1.setText("");
 				status2.setText("");
@@ -85,6 +82,8 @@ public class Menu extends JFrame{
 		b[1].addActionListener(new ActionListener() {//카페라떼 클릭시 발생하는 액션	
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				M_bchoice();
+
 				status0.setText("");
 				status1.setText("");
 				status2.setText("");
@@ -95,9 +94,10 @@ public class Menu extends JFrame{
 				add(status0);
 			}			
 		});
-		b[2].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+		b[2].addActionListener(new ActionListener() {//아이스티 클릭시 발생하는 액션정의	
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				M_bchoice();
 				status0.setText("");
 				status1.setText("");
 				status2.setText("");
@@ -107,14 +107,157 @@ public class Menu extends JFrame{
 				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 				add(status0);
 			}			
+		});		
+	}
+	void remove() {
+		choice1.removeAll();
+		choice1.revalidate();
+		choice1.repaint();
+		choice2.removeAll();
+		choice2.revalidate();
+		choice2.repaint();
+		choice3.removeAll();
+		choice3.revalidate();
+		choice3.repaint();
+	}
+	void M_sorder(JButton b[]) {
+		
+		b[3].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[3].getText()+" 2000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		b[4].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[4].getText()+" 2000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		b[5].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[5].getText()+" 1000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		b[6].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[6].getText()+" 2000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		b[7].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[7].getText()+" 1000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		b[8].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[8].getText()+" 1000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
+		});
+		
+		b[9].addActionListener(new ActionListener() {//아메리카노 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(flag==3)
+					remove();
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+				status0.setText(b[9].getText()+" 2000원");
+				status0.setBounds(590,370,300,80);
+				status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+				add(status0);
+			}			
 		});
 		
 		
 		
+		cancle = new JButton("Cancle");
+		pay = new JButton("Pay");
 		
+		cancle.setBounds(490, 450, 100, 50);
+		pay.setBounds(680, 450, 100, 50);
+		
+		add(cancle);
+		add(pay);
+		
+		cancle.addActionListener(new ActionListener() {//cancle 클릭시 발생하는 액션정의	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				status0.setText("");
+				status1.setText("");
+				status2.setText("");
+				status3.setText("");
+			}			
+		});
 	}
-	void M_choice() {
-		
+	void M_bchoice() {
+		flag=3;
 		choice1 = new JPanel();
 		choice2 = new JPanel();
 		choice3 = new JPanel();
@@ -168,27 +311,29 @@ public class Menu extends JFrame{
 		add(choice2);
 		add(choice3);//삽입
 		
-
+		
 		hot.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
 				status2.setText("");
 				status3.setText("");
 				status1.setText(status0.getText());
 				status1.setText(status1.getText()+"/ HOT");
+				
 			}
 		});
-		
 		ice.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
 				status2.setText("");
 				status3.setText("");
 				status1.setText(status0.getText());
 				status1.setText(status1.getText()+"/ ICE");
+				
 			}
 		});	
 		status1.setBounds(500,370,300,80);
 		status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 		add(status1);
+	
 	
 		small.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -228,8 +373,6 @@ public class Menu extends JFrame{
 				status3.setText(status2.getText());
 				status3.setText(status3.getText()+"/ YES");
 				status3.setText(status3.getText()+"/ "+b_price+"원");
-
-				
 			}
 		});
 
@@ -238,7 +381,6 @@ public class Menu extends JFrame{
 				status3.setText(status2.getText());
 				status3.setText(status3.getText()+"/ NO");
 				status3.setText(status3.getText()+"/ "+b_price+"원");
-
 			}
 		});
 		status3.setBounds(500,370,300,80);
@@ -261,7 +403,6 @@ public class Menu extends JFrame{
 				status1.setText("");
 				status2.setText("");
 				status3.setText("");
-				
 			}			
 		});
 		
