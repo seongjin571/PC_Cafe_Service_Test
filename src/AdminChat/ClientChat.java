@@ -23,7 +23,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-class ClientFrame extends JFrame implements ActionListener {
+public class ClientChat extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
@@ -33,7 +33,7 @@ class ClientFrame extends JFrame implements ActionListener {
 	static PrintWriter out = null;
 	static BufferedReader in = null;
 
-	public ClientFrame() {
+	public ClientChat() {
 		setSize(550, 600);
 		f1 = new Font("µ¸¿ò", Font.BOLD, 30);
 		setTitle("SeJong Pc Cafe");
@@ -99,9 +99,9 @@ class ClientFrame extends JFrame implements ActionListener {
 	}
 }
 
-public class UserChat {
-	public static void main(String[] args) throws IOException {
-		ClientFrame f = new ClientFrame();
-		f.client();
-	}
-}
+//public class UserChat {
+//	public static void main(String[] args) throws IOException {
+//		ClientFrame f = new ClientFrame();
+//		f.client();
+//	}
+//}
