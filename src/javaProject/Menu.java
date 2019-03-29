@@ -8,8 +8,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.*;
+
+import jdbc.dto.user;
 import jdbc.dao.*;
 import jdbc.dto.*;
+
 
 public class Menu extends JFrame{
 	
@@ -18,6 +21,7 @@ public class Menu extends JFrame{
 	JButton b[], chat, cancle, pay;
 	JRadioButton ice, hot, small, tall, large, yes, no;
 	ButtonGroup group1, group2, group3;
+	user_inf u_inf = new user_inf();
 	int i, b_price=0, s_price=0, flag=0;
 	
 	Menu(String str){
@@ -34,7 +38,11 @@ public class Menu extends JFrame{
 		M_sorder(b);
 		M_chat();
 	}
-	
+	void id(String id) {
+		
+		//u_inf.updateprice(id);
+		
+	}
 	void M_button() {
 		b = new JButton[10];
 		
@@ -341,7 +349,7 @@ public class Menu extends JFrame{
 				status3.setText("");
 				status2.setText(status1.getText());
 				status2.setText(status2.getText()+"/ SMALL");
-				b_price+=1000;
+				b_price=1000;
 			}
 		});
 		
@@ -351,7 +359,7 @@ public class Menu extends JFrame{
 				status3.setText("");
 				status2.setText(status1.getText());
 				status2.setText(status2.getText()+"/ TALL");
-				b_price+=1500;
+				b_price=1500;
 			}
 		});
 		
@@ -361,7 +369,7 @@ public class Menu extends JFrame{
 				status3.setText("");
 				status2.setText(status1.getText());
 				status2.setText(status2.getText()+"/ LARGE");
-				b_price+=2000;
+				b_price=2000;
 			}
 		});
 		status2.setBounds(500,370,300,80);
@@ -387,6 +395,7 @@ public class Menu extends JFrame{
 		status3.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
 		add(status3);
 		
+		
 		cancle = new JButton("Cancle");
 		pay = new JButton("Pay");
 		
@@ -405,8 +414,6 @@ public class Menu extends JFrame{
 				status3.setText("");
 			}			
 		});
-		
-		
 		
 	}
 	
