@@ -6,16 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
 import jdbc.dto.user;
 import jdbc.dao.*;
 import jdbc.dto.*;
+import AdminChat.*;
 
 
 public class Menu extends JFrame{
-	
+	private static final long serialVersionUID = 1L;
 	JLabel status0, status1, status2, status3, ice_hot, size, shot;
 	JPanel background, choice1, choice2, choice3;
 	JButton b[], chat, cancle, pay;
@@ -372,6 +374,19 @@ public class Menu extends JFrame{
 				b_price=2000;
 			}
 		});
+		
+		chat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ClientChat f = new ClientChat();
+				try {
+					f.client();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		status2.setBounds(500,370,300,80);
 		status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 		add(status2);
@@ -405,7 +420,8 @@ public class Menu extends JFrame{
 		add(cancle);
 		add(pay);
 		
-		cancle.addActionListener(new ActionListener() {//cancle 클릭시 발생하는 액션정의	
+		cancle.addActionListener(new ActionListener() {
+			//cancle 클릭시 발생하는 액션정의	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				status0.setText("");
@@ -418,7 +434,7 @@ public class Menu extends JFrame{
 	}
 	
 	void M_chat() {
-		chat = new JButton("chatting");
+		chat = new JButton("채팅");
 		
 		chat.setBounds(110,453,200,50);//위치, 크기 설정
 		chat.setBackground(new Color(210,50,50));//색상 빨간색
@@ -427,4 +443,19 @@ public class Menu extends JFrame{
 		chat.setBorderPainted(false);
 		add(chat);
 	}
+	
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		if (e.getSource() == chat) {
+//			System.out.println("asd");
+//			ClientChat f = new ClientChat();
+//			try {
+//				f.client();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//		}
+//		
+//	}
 }
