@@ -72,28 +72,6 @@ public class ClientChat extends JFrame implements ActionListener,Runnable {
 		}
 	}
 
-//	public void client() throws IOException {
-//		Socket socket = null;
-//		try {
-//			socket = new Socket("localhost", 3000);
-//			out = new PrintWriter(socket.getOutputStream(), true);
-//			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//		} catch (UnknownHostException e) {
-//			System.err.println("localhost에 접근할 수 없습니다.");
-//			System.exit(1);
-//		} catch (IOException eg) {
-//			System.err.println("입출력 오류11");
-//			System.exit(1);
-//		}
-//		String fromServer;
-//		while ((fromServer = in.readLine()) != null) {
-//			String s = fromServer + " " + nowTime() + "\n";
-//			textArea.append(s);
-//		}
-//		out.close();
-//		in.close();
-//		socket.close();
-//	}
 
 	public String nowTime() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
@@ -144,10 +122,3 @@ public class ClientChat extends JFrame implements ActionListener,Runnable {
 		
 	}
 }
-
-//public class UserChat {
-//	public static void main(String[] args) throws IOException {
-//		ClientFrame f = new ClientFrame();
-//		f.client();
-//	}
-//}

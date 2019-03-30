@@ -60,7 +60,6 @@ public class AdminChat extends JFrame implements ActionListener,Runnable {
 		add(panel);
 		setVisible(true);
 
-
 	}
 
 	@Override
@@ -74,33 +73,6 @@ public class AdminChat extends JFrame implements ActionListener,Runnable {
 		}
 	} 
 
-
-
-//	public void serverStart() throws IOException {
-//		System.out.println("서버 시작!");
-//		try {
-//			serverSocket = new ServerSocket(3000);
-//		} catch (IOException e) {
-//			System.out.println("해당 포트 번호에 연결할 수 없습니다");
-//			System.exit(1);
-//		}
-//		clientSocket = null;
-//		try {
-//			clientSocket = serverSocket.accept();
-//		} catch (IOException e) {
-//			System.err.println("accept() 실패 ");
-//			System.exit(1);
-//		}
-//		out = new PrintWriter(clientSocket.getOutputStream(), true);
-//		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-//		textArea.append("클라이언트가 접속되었습니다.\n");
-//		while ((inputLine = in.readLine()) != null) {
-//			String s = inputLine + " "+ nowTime()+"\n";
-//			textArea.append(s);
-//		}
-//		out.close();
-//		in.close();
-//	}
 	
 	public String nowTime(){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
