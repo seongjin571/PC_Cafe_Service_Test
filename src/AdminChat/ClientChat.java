@@ -25,23 +25,24 @@ import javax.swing.KeyStroke;
 
 public class ClientChat extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	JButton but_input;
-	JTextArea textArea;
-	JTextField textInput;
-	JLabel name;
-	Font f1;
-	static PrintWriter out = null;
-	static BufferedReader in = null;
+	public JButton but_input;
+	public JTextArea textArea;
+	public JTextField textInput;
+	public JLabel name;
+	public JPanel panel,panel2;
+	public Font f1;
+	public static PrintWriter out = null;
+	public static BufferedReader in = null;
 
 	public ClientChat() {
 		setSize(550, 600);
 		f1 = new Font("µ¸¿ò", Font.BOLD, 30);
 		setTitle("SeJong Pc Cafe");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		name = new JLabel("SeJong Pc Cafe Ã¤ÆÃ¹æ");
 		name.setFont(f1);
-		JPanel panel2 = new JPanel();
+		panel2 = new JPanel();
 		textArea = new JTextArea(25, 40);
 		textInput = new JTextField(20);
 		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
