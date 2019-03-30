@@ -24,7 +24,7 @@ public class jdbcEx {
 		//실행 후 stock table 확인하면 해당 재고 수가 하나씩 감소함
 		managerGUI window=new managerGUI();
 		window.managerWindow();
-		AdminChat adminChat = new AdminChat();
+//		AdminChat adminChat = new AdminChat();
 //		adminChat.serverStart();
 	}
 
