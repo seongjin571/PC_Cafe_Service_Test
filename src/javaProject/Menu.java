@@ -15,7 +15,7 @@ import jdbc.dao.*;
 import jdbc.dto.*;
 import AdminChat.*;
 
-public class Menu extends JFrame implements ActionListener {
+public class Menu extends JFrame implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	JLabel status0, status1, status2, status3, ice_hot, size, shot;
 	JPanel background, choice1, choice2, choice3;
@@ -39,7 +39,16 @@ public class Menu extends JFrame implements ActionListener {
 		M_button();
 		M_border(b);
 		M_sorder(b);
-		M_chat();
+//		M_chat();
+		chat = new JButton("채팅");
+		chat.setActionCommand("chat");
+		chat.addActionListener(this);
+		chat.setBounds(110, 453, 200, 50);// 위치, 크기 설정
+		chat.setBackground(new Color(210, 50, 50));// 색상 빨간색
+		chat.setFont(new Font("", Font.PLAIN, 17));// 글씨체 설정
+		chat.setForeground(new Color(255, 255, 255));// 글씨 하얀색
+		chat.setBorderPainted(false);
+		add(chat);
 	}
 
 	void id(String id) {
@@ -378,12 +387,7 @@ public class Menu extends JFrame implements ActionListener {
 			}
 		});
 
-//		chat.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				ClientChat clientChat = new ClientChat(userName);
-//				new Thread(clientChat).start();
-//			}
-//		});
+	
 
 		status2.setBounds(500, 370, 300, 80);
 		status2.setFont(new Font("", Font.PLAIN, 17));// 글씨체 설정
@@ -430,29 +434,22 @@ public class Menu extends JFrame implements ActionListener {
 
 	}
 
-	void M_chat() {
-		chat = new JButton("채팅");
-
-		chat.setBounds(110, 453, 200, 50);// 위치, 크기 설정
-		chat.setBackground(new Color(210, 50, 50));// 색상 빨간색
-		chat.setFont(new Font("", Font.PLAIN, 17));// 글씨체 설정
-		chat.setForeground(new Color(255, 255, 255));// 글씨 하얀색
-		chat.setBorderPainted(false);
-		add(chat);
-	}
-
-//	public void actionPerformed(ActionEvent e) {
-//		if(e.getSource()==chat) {
-//			ClientChat clientChat = new ClientChat(userName);
-//			new Thread(clientChat).start();
-//		}
+//	void M_chat() {
+//		chat = new JButton("채팅");
+//		chat.addActionListener(this);
+//		chat.setBounds(110, 453, 200, 50);// 위치, 크기 설정
+//		chat.setBackground(new Color(210, 50, 50));// 색상 빨간색
+//		chat.setFont(new Font("", Font.PLAIN, 17));// 글씨체 설정
+//		chat.setForeground(new Color(255, 255, 255));// 글씨 하얀색
+//		chat.setBorderPainted(false);
+//		add(chat);
 //	}
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		if (arg0.getSource() == chat) {
+
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand() == "chat") {
 			ClientChat clientChat = new ClientChat(userName);
 			new Thread(clientChat).start();
 		}
 	}
+
 }
