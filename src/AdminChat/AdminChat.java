@@ -24,7 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-public class AdminChat extends JFrame implements ActionListener {
+public class AdminChat extends JFrame implements ActionListener,Runnable {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
@@ -48,8 +48,7 @@ public class AdminChat extends JFrame implements ActionListener {
 		JPanel panel2 = new JPanel();
 		textArea = new JTextArea(25, 40);
 		textInput = new JTextField(20);
-		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
-				JComponent.WHEN_FOCUSED);
+		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
 		but_input = new JButton("입력");
 		but_input.setActionCommand("input");
 		but_input.addActionListener(this);
@@ -60,13 +59,7 @@ public class AdminChat extends JFrame implements ActionListener {
 		add(panel2, BorderLayout.NORTH);
 		add(panel);
 		setVisible(true);
-		try {
-			serverStart();
-		} catch (IOException e) {
-			System.out.print("오류발생_관리자");
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 
 	}
 
@@ -75,13 +68,51 @@ public class AdminChat extends JFrame implements ActionListener {
 		String s;
 		s = "관리자 : " + textInput.getText();
 		if (e.getActionCommand() == "input") {
-			textArea.append(s + " " + nowTime() + "\n");
+			textArea.append(s + " "+ nowTime()+"\n");
 			out.println(s);
 			textInput.setText("");
 		}
+	} 
+
+
+
+//	public void serverStart() throws IOException {
+//		System.out.println("서버 시작!");
+//		try {
+//			serverSocket = new ServerSocket(3000);
+//		} catch (IOException e) {
+//			System.out.println("해당 포트 번호에 연결할 수 없습니다");
+//			System.exit(1);
+//		}
+//		clientSocket = null;
+//		try {
+//			clientSocket = serverSocket.accept();
+//		} catch (IOException e) {
+//			System.err.println("accept() 실패 ");
+//			System.exit(1);
+//		}
+//		out = new PrintWriter(clientSocket.getOutputStream(), true);
+//		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+//		textArea.append("클라이언트가 접속되었습니다.\n");
+//		while ((inputLine = in.readLine()) != null) {
+//			String s = inputLine + " "+ nowTime()+"\n";
+//			textArea.append(s);
+//		}
+//		out.close();
+//		in.close();
+//	}
+	
+	public String nowTime(){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
+		LocalDateTime time = LocalDateTime.now();
+		String nowTime = " ["+time.format(formatter)+"]";
+		return nowTime;
+		
 	}
 
-	public void serverStart() throws IOException {
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		System.out.println("서버 시작!");
 		try {
 			serverSocket = new ServerSocket(3000);
@@ -96,30 +127,37 @@ public class AdminChat extends JFrame implements ActionListener {
 			System.err.println("accept() 실패 ");
 			System.exit(1);
 		}
-		out = new PrintWriter(clientSocket.getOutputStream(), true);
-		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		try {
+			out = new PrintWriter(clientSocket.getOutputStream(), true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		textArea.append("클라이언트가 접속되었습니다.\n");
-		while ((inputLine = in.readLine()) != null) {
-			String s = inputLine + " " + nowTime() + "\n";
-			textArea.append(s);
+		try {
+			while ((inputLine = in.readLine()) != null) {
+				String s = inputLine + " "+ nowTime()+"\n";
+				textArea.append(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		out.close();
-		in.close();
-	}
-
-	public String nowTime() {
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
-		LocalDateTime time = LocalDateTime.now();
-		String nowTime = " [" + time.format(formatter) + "]";
-		return nowTime;
-
+		try {
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
-//public class AdminChat { 
-//	public static void main(String[] args) throws IOException { 
-//		SFrame f = new SFrame(); 
-//		
-//		f.serverStart();
-//		} 
-//	}
+
+
