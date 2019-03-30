@@ -1,13 +1,16 @@
 package jdbc.ex;
 
 import jdbc.dao.*;
+import AdminChat.*;
 import jdbc.dto.*;
+
+import java.io.IOException;
 import java.util.*;
 
 
 public class jdbcEx {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 
 		/*String menu="아이스티";//메뉴가 주문되었다고 가정
@@ -21,6 +24,8 @@ public class jdbcEx {
 		//실행 후 stock table 확인하면 해당 재고 수가 하나씩 감소함
 		managerGUI window=new managerGUI();
 		window.managerWindow();
+		AdminChat adminChat = new AdminChat();
+		adminChat.serverStart();
 	}
 
 }

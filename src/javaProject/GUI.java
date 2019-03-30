@@ -1,6 +1,7 @@
 package javaProject;
 
 import java.util.*;
+import AdminChat.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -155,8 +156,10 @@ public class GUI extends JFrame {
 		
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		GUI j1 = new GUI();
+		ClientChat clientChat = new ClientChat();
+		clientChat.client();
 		
 		
 	}
