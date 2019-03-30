@@ -24,7 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-class SFrame extends JFrame implements ActionListener {
+public class AdminChat extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
@@ -37,7 +37,7 @@ class SFrame extends JFrame implements ActionListener {
 	static BufferedReader in;
 	static String inputLine, outputLine;
 
-	public SFrame() {
+	public AdminChat() {
 		setSize(550, 600);
 		f1 = new Font("µ¸¿ò", Font.BOLD, 30);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,6 +59,7 @@ class SFrame extends JFrame implements ActionListener {
 		add(panel2, BorderLayout.NORTH);
 		add(panel);
 		setVisible(true);
+
 	}
 
 	@Override
@@ -95,8 +96,6 @@ class SFrame extends JFrame implements ActionListener {
 		while ((inputLine = in.readLine()) != null) {
 			String s = inputLine + " "+ nowTime()+"\n";
 			textArea.append(s);
-//			if (outputLine.equals("quit"))
-//				break;
 		}
 		out.close();
 		in.close();
@@ -110,11 +109,11 @@ class SFrame extends JFrame implements ActionListener {
 	}
 }
 
-public class AdminChat { 
-	public static void main(String[] args) throws IOException { 
-		SFrame f = new SFrame(); 
-		
-		f.serverStart();
-		} 
-	}
+//public class AdminChat { 
+//	public static void main(String[] args) throws IOException { 
+//		SFrame f = new SFrame(); 
+//		
+//		f.serverStart();
+//		} 
+//	}
 
