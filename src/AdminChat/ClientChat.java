@@ -25,14 +25,14 @@ import javax.swing.KeyStroke;
 
 public class ClientChat extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	public JButton but_input;
-	public JTextArea textArea;
-	public JTextField textInput;
-	public JLabel name;
-	public JPanel panel,panel2;
-	public Font f1;
-	public static PrintWriter out = null;
-	public static BufferedReader in = null;
+	JButton but_input;
+	JTextArea textArea;
+	JTextField textInput;
+	JLabel name;
+	JPanel panel, panel2;
+	Font f1;
+	static PrintWriter out = null;
+	static BufferedReader in = null;
 
 	public ClientChat() {
 		setSize(550, 600);
@@ -45,7 +45,8 @@ public class ClientChat extends JFrame implements ActionListener {
 		panel2 = new JPanel();
 		textArea = new JTextArea(25, 40);
 		textInput = new JTextField(20);
-		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+				JComponent.WHEN_FOCUSED);
 		but_input = new JButton("입력");
 		but_input.setActionCommand("input");
 		but_input.addActionListener(this);
@@ -56,13 +57,20 @@ public class ClientChat extends JFrame implements ActionListener {
 		add(panel2, BorderLayout.NORTH);
 		add(panel);
 		setVisible(true);
+		try {
+			client();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("오류 발생");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "input") {
 			String s = "손님 : " + textInput.getText();
-			textArea.append(s + " "+ nowTime()+"\n");
+			textArea.append(s + " " + nowTime() + "\n");
 			out.println(s);
 			textInput.setText("");
 		}
@@ -83,20 +91,20 @@ public class ClientChat extends JFrame implements ActionListener {
 		}
 		String fromServer;
 		while ((fromServer = in.readLine()) != null) {
-			String s = fromServer + " "+ nowTime()+"\n";
+			String s = fromServer + " " + nowTime() + "\n";
 			textArea.append(s);
 		}
 		out.close();
 		in.close();
 		socket.close();
 	}
-	
-	public String nowTime(){
+
+	public String nowTime() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
 		LocalDateTime time = LocalDateTime.now();
-		String nowTime = " ["+time.format(formatter)+"]";
+		String nowTime = " [" + time.format(formatter) + "]";
 		return nowTime;
-		
+
 	}
 }
 

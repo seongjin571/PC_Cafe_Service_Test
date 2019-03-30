@@ -156,10 +156,10 @@ public class GUI extends JFrame {
 		
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args)  {
 		GUI j1 = new GUI();
 		ClientChat clientChat = new ClientChat();
-		clientChat.client();
+//		clientChat.client();
 		
 		
 	}

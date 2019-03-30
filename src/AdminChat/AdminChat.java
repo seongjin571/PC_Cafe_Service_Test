@@ -48,7 +48,8 @@ public class AdminChat extends JFrame implements ActionListener {
 		JPanel panel2 = new JPanel();
 		textArea = new JTextArea(25, 40);
 		textInput = new JTextField(20);
-		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+				JComponent.WHEN_FOCUSED);
 		but_input = new JButton("입력");
 		but_input.setActionCommand("input");
 		but_input.addActionListener(this);
@@ -59,6 +60,13 @@ public class AdminChat extends JFrame implements ActionListener {
 		add(panel2, BorderLayout.NORTH);
 		add(panel);
 		setVisible(true);
+		try {
+			serverStart();
+		} catch (IOException e) {
+			System.out.print("오류발생_관리자");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -67,13 +75,11 @@ public class AdminChat extends JFrame implements ActionListener {
 		String s;
 		s = "관리자 : " + textInput.getText();
 		if (e.getActionCommand() == "input") {
-			textArea.append(s + " "+ nowTime()+"\n");
+			textArea.append(s + " " + nowTime() + "\n");
 			out.println(s);
 			textInput.setText("");
 		}
-	} 
-
-
+	}
 
 	public void serverStart() throws IOException {
 		System.out.println("서버 시작!");
@@ -94,18 +100,19 @@ public class AdminChat extends JFrame implements ActionListener {
 		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 		textArea.append("클라이언트가 접속되었습니다.\n");
 		while ((inputLine = in.readLine()) != null) {
-			String s = inputLine + " "+ nowTime()+"\n";
+			String s = inputLine + " " + nowTime() + "\n";
 			textArea.append(s);
 		}
 		out.close();
 		in.close();
 	}
-	public String nowTime(){
+
+	public String nowTime() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
 		LocalDateTime time = LocalDateTime.now();
-		String nowTime = " ["+time.format(formatter)+"]";
+		String nowTime = " [" + time.format(formatter) + "]";
 		return nowTime;
-		
+
 	}
 }
 
@@ -116,4 +123,3 @@ public class AdminChat extends JFrame implements ActionListener {
 //		f.serverStart();
 //		} 
 //	}
-

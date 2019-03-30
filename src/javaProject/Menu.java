@@ -444,18 +444,4 @@ public class Menu extends JFrame{
 		add(chat);
 	}
 	
-//	@Override
-//	public void actionPerformed(ActionEvent e) {
-//		if (e.getSource() == chat) {
-//			System.out.println("asd");
-//			ClientChat f = new ClientChat();
-//			try {
-//				f.client();
-//			} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-//		}
-//		
-//	}
 }
