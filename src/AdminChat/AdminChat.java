@@ -33,7 +33,7 @@ public class AdminChat extends JFrame implements ActionListener,Runnable {
 	Font f1;
 	static ServerSocket serverSocket = null;
 	static Socket clientSocket = null;
-	static PrintWriter out;
+	static PrintWriter out; 
 	static BufferedReader in;
 	static String inputLine, outputLine;
 
