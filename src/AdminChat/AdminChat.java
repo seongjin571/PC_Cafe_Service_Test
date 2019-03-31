@@ -41,6 +41,7 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 
 	public void chatStart() {
 		setSize(550, 600);
+		setLocation(100,180);
 		f1 = new Font("µ¸¿ò", Font.BOLD, 30);
 		addWindowListener(this);
 		setTitle("SeJong Pc Cafe");
