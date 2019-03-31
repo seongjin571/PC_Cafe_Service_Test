@@ -24,13 +24,18 @@ import jdbc.dto.Stock;
 public class managerGUI extends JFrame implements ActionListener, WindowListener{
 	 	
 	private static final long serialVersionUID = 1L;
-	JPanel contentPane,grid1,grid2,grid3;
+	JPanel contentPane,contentPane1,contentPane2,grid1,grid2,grid3,grid4;
 	   JButton btn1,btn2,btn3;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
 	   JButton btn15,btn16,btn17,btn18;
+	   JButton btn19,btn20,btn21,btn22;
 	   BufferedImage img;
-	   JLabel la1,la2,label,la3;
+	   JLabel la1,la2,label,la3,la4,la5;
 	   JTextField text;
+	   String str;
+	   
+	   private CardLayout cards=new CardLayout();
+	   
 	   
 	   public void showStock() {
 		   
@@ -38,7 +43,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	       Object[][] data; // 2차원 배열 데이터
 	       
 	       
-		   contentPane=new JPanel();
+		   contentPane1=new JPanel();
 		   
 	       setTitle("재고 관리 프로그램");
 	       addWindowListener(this);
@@ -133,7 +138,9 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			
 			btn15=new JButton("POS");
 			btn16=new JButton("주문");
+			btn16.addActionListener(this);
 			btn17=new JButton("판매현황");
+			btn17.addActionListener(this);
 			btn18=new JButton("초기화");
 			
 			grid2.add(btn15);
@@ -144,6 +151,46 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			grid2.setBounds(35, 600, 900, 80);
 			
 			add(grid2);
+			
+			setSize(1000, 800);
+			setLocation(800,10);
+			setVisible(true); 	            			   
+	   }
+	   
+	   public void sale() {
+		   
+		   contentPane2=new JPanel();
+		   
+	       setTitle("판매 현황");
+	       addWindowListener(this);
+	    
+	       setLayout(null);
+	       
+			
+			la4=new JLabel("재고 현황");
+			la4.setBounds(35 , 5, 100, 50);
+			add(la4);
+            
+			la5=new JLabel("물품주문");
+			la5.setBounds(35 , 200, 100, 50);
+			add(la5);
+			
+			grid4=new JPanel();
+			grid4.setLayout(new GridLayout(1,4,30,30));
+			
+			btn19=new JButton("POS");
+			btn20=new JButton("매출");
+			btn21=new JButton("메뉴별판매");
+			btn22=new JButton("판매리스트");
+			
+			grid4.add(btn19);
+			grid4.add(btn20);
+			grid4.add(btn21);
+			grid4.add(btn22);
+			
+			grid4.setBounds(35, 600, 900, 80);
+			
+			add(grid4);
 			
 			setSize(1000, 800);
 			setLocation(800,10);
@@ -187,19 +234,32 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==btn1) new managerGUI().showStock();
+		if(e.getSource()==btn1) new managerGUI().sale();
 		else if(e.getSource()==btn2) new managerGUI().showStock();
 		else if(e.getSource()==btn3) {
 			AdminChat adminChat = new AdminChat();
 			new Thread(adminChat).start();
 		}
 		
+		if(e.getSource()==btn16) {
+			if(Integer.parseInt(text.getText())>0) {
+				new PCDao().useStock(str,-Integer.parseInt(text.getText()));
+				System.exit(0);
+				new managerGUI().showStock();
+			}
+			else {
+				
+			}
+		}
+		else if(e.getSource()==btn17) new managerGUI().sale();
 		
 		if(e.getSource()==btn4 || e.getSource()==btn5 || e.getSource()==btn6 || e.getSource()==btn7 || e.getSource()==btn8 || e.getSource()==btn9 ||e.getSource()==btn10 ||e.getSource()==btn11 || e.getSource()==btn12 || e.getSource()==btn13 || e.getSource()==btn14) {
+			str=e.getActionCommand();
 			label.setText(e.getActionCommand()+"을/를 주문하실건가요? 수량을 입력하세요.");
 			la3.setText("주문수량입력:");
 			add(text);
 		}
+		
 		
 	}
 

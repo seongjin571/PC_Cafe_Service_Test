@@ -3,6 +3,8 @@ package jdbc.dao;
 import java.sql.*;
 import java.util.*;
 
+import javax.swing.JOptionPane;
+
 import jdbc.dto.Food;
 import jdbc.dto.Stock;
 
@@ -67,7 +69,7 @@ public class PCDao{
 		   }
 		   return food;
 	   }
-	   public int useStock(String ingredient) {
+	   public int useStock(String ingredient,int num) {
 		   
 		   int count=0;
 		   int result=0;
@@ -82,13 +84,16 @@ public class PCDao{
 			rs=ps.executeQuery();
 			while (rs.next()) {count=rs.getInt("count");}
 			//재료의 재고 수를 파악
-			
-			sql= "update stock set count="+ (count-1) + " where name=?";
+			if(count-num<0) {
+				JOptionPane.showMessageDialog(null, "","재고가 부족합니다.", result);
+				return 0;
+			}
+			sql= "update stock set count="+ (count-num) + " where name=?";
 			ps= conn.prepareStatement(sql);
 			ps.setObject(1, ingredient);
 			result=ps.executeUpdate();
             
-			//재료의 재고 수를 한 개 줄임
+			
 		   } catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
