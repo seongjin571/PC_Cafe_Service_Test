@@ -32,10 +32,6 @@ public class Menu extends JFrame implements ActionListener{
 		this.userName = userName;
 		setLayout(null); // 레이아웃 내가 원하는 위치로
 
-		background = new JPanel();
-		background.setBackground(Color.PINK);
-		background.setBounds(0, 0, 900, 300);
-		add(background);
 
 		M_button();
 		M_border(b);

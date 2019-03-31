@@ -22,6 +22,8 @@ import jdbc.dto.*;
 
 
 public class customerGUI extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	JLabel lb1, la1, la2, la3, la4, status;
 	JTextField id, pw;
 	JPanel idPanel, paPanel, loginPanel;
