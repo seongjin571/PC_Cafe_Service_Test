@@ -85,7 +85,7 @@ public class PCDao{
 			while (rs.next()) {count=rs.getInt("count");}
 			//재료의 재고 수를 파악
 			if(count-num<0) {
-				JOptionPane.showMessageDialog(null, "","재고가 부족합니다.", result);
+				JOptionPane.showMessageDialog(null, "재고가 부족합니다.");
 				return 0;
 			}
 			sql= "update stock set count="+ (count-num) + " where name=?";

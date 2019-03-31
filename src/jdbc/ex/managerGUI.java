@@ -27,12 +27,13 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	JPanel contentPane,contentPane1,contentPane2,grid1,grid2,grid3,grid4;
 	   JButton btn1,btn2,btn3;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
-	   JButton btn15,btn16,btn17,btn18;
-	   JButton btn19,btn20,btn21,btn22;
+	   JButton btn16,btn17,btn18;
+	   JButton btn19,btn20,btn21;
 	   BufferedImage img;
 	   JLabel la1,la2,label,la3,la4,la5;
 	   JTextField text;
 	   String str;
+	   int count=0;
 	   
 	   private CardLayout cards=new CardLayout();
 	   
@@ -42,9 +43,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		   Object[] colNames; // 열이름 => 1차원 배열
 	       Object[][] data; // 2차원 배열 데이터
 	       
-	       
-		   contentPane1=new JPanel();
-		   
+	       contentPane1=new JPanel();
 	       setTitle("재고 관리 프로그램");
 	       addWindowListener(this);
 	    
@@ -136,14 +135,13 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			grid2=new JPanel();
 			grid2.setLayout(new GridLayout(1,4,30,30));
 			
-			btn15=new JButton("POS");
 			btn16=new JButton("주문");
 			btn16.addActionListener(this);
 			btn17=new JButton("판매현황");
 			btn17.addActionListener(this);
 			btn18=new JButton("초기화");
+			btn18.addActionListener(this);
 			
-			grid2.add(btn15);
 			grid2.add(btn16);
 			grid2.add(btn17);
 			grid2.add(btn18);
@@ -151,7 +149,6 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			grid2.setBounds(35, 600, 900, 80);
 			
 			add(grid2);
-			
 			setSize(1000, 800);
 			setLocation(800,10);
 			setVisible(true); 	            			   
@@ -159,13 +156,11 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	   
 	   public void sale() {
 		   
-		   contentPane2=new JPanel();
 		   
 	       setTitle("판매 현황");
 	       addWindowListener(this);
-	    
 	       setLayout(null);
-	       
+	       contentPane2=new JPanel();
 			
 			la4=new JLabel("재고 현황");
 			la4.setBounds(35 , 5, 100, 50);
@@ -176,17 +171,15 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			add(la5);
 			
 			grid4=new JPanel();
-			grid4.setLayout(new GridLayout(1,4,30,30));
+			grid4.setLayout(new GridLayout(1,3,30,30));
 			
-			btn19=new JButton("POS");
-			btn20=new JButton("매출");
-			btn21=new JButton("메뉴별판매");
-			btn22=new JButton("판매리스트");
+			btn19=new JButton("매출");
+			btn20=new JButton("메뉴별판매");
+			btn21=new JButton("판매리스트");
 			
 			grid4.add(btn19);
 			grid4.add(btn20);
 			grid4.add(btn21);
-			grid4.add(btn22);
 			
 			grid4.setBounds(35, 600, 900, 80);
 			
@@ -227,6 +220,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	         
 	       setSize(650,900);
 	       setLocation(0,10);
+
 	       setVisible(true);
 	   
 	   }
@@ -234,23 +228,36 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource()==btn1) new managerGUI().sale();
-		else if(e.getSource()==btn2) new managerGUI().showStock();
+		
+		if(e.getSource()==btn1) {
+			new managerGUI().sale();
+		}
+		else if(e.getSource()==btn2) {
+			new managerGUI().showStock();
+		}
 		else if(e.getSource()==btn3) {
 			AdminChat adminChat = new AdminChat();
 			new Thread(adminChat).start();
 		}
 		
 		if(e.getSource()==btn16) {
-			if(Integer.parseInt(text.getText())>0) {
+			try {
+				Integer.parseInt(text.getText());
+				if(Integer.parseInt(text.getText())<=0) throw new Exception();
 				new PCDao().useStock(str,-Integer.parseInt(text.getText()));
 				setVisible(false);
 				new managerGUI().showStock();
-			}
-			else {
+			}catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, "잘못된 입력 입니다.");
 			}
 		}
-		else if(e.getSource()==btn17) new managerGUI().sale();
+		else if(e.getSource()==btn17) {
+			setVisible(false);
+			new managerGUI().sale();
+		}
+		else if(e.getSource()==btn18) {
+			text.setText("");
+		}
 		
 		if(e.getSource()==btn4 || e.getSource()==btn5 || e.getSource()==btn6 || e.getSource()==btn7 || e.getSource()==btn8 || e.getSource()==btn9 ||e.getSource()==btn10 ||e.getSource()==btn11 || e.getSource()==btn12 || e.getSource()==btn13 || e.getSource()==btn14) {
 			str=e.getActionCommand();
@@ -265,7 +272,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
