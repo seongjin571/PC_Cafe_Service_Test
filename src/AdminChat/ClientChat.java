@@ -40,6 +40,7 @@ public class ClientChat extends JFrame implements ActionListener,Runnable,Window
 	public ClientChat(String userName) {
 		this.userName = userName;
 		setSize(550, 600);
+		setLocation(1000,180);
 		f1 = new Font("µ¸¿ò", Font.BOLD, 30);
 		addWindowListener(this);
 		setTitle("SeJong Pc Cafe");
