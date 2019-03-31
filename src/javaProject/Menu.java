@@ -17,7 +17,7 @@ import jdbc.dto.*;
 public class Menu extends JFrame{
 	
 	JLabel status0, status1, status2, status3, ice_hot, size, shot;
-	JPanel background, choice1, choice2, choice3;
+	JPanel background, choice1, choice2, choice3, grid1;
 	JButton b[], chat, cancle, pay;
 	JRadioButton ice, hot, small, tall, large, yes, no;
 	ButtonGroup group1, group2, group3;
@@ -28,10 +28,6 @@ public class Menu extends JFrame{
 		super(str);
 		setLayout(null); //레이아웃 내가 원하는 위치로
 
-		background = new JPanel();
-		background.setBackground(Color.PINK);
-		background.setBounds(0, 0, 900, 300);
-		add(background);
 		
 		M_button();
 		M_border(b);
@@ -44,6 +40,9 @@ public class Menu extends JFrame{
 		
 	}
 	void M_button() {
+		
+		grid1 = new JPanel();
+		grid1.setLayout(new GridLayout(2,5,30,30));
 		b = new JButton[10];
 		
 		b[0] = new JButton("아메리카노");
@@ -57,13 +56,11 @@ public class Menu extends JFrame{
 		b[8] = new JButton("건빵");
 		b[9] = new JButton("핫도그");//메뉴 버튼 생성
 		
-		for(i = 0 ; i < 10 ; i++) {
-			if(i<5)
-				b[i].setBounds(50+(165)*i,50,100,70);
-			else
-				b[i].setBounds(50+(165)*(i-5),170,100,70);//위치, 크기 설정
-			add(b[i]);
-		}
+		for(i=0;i<10;i++)
+			grid1.add(b[i]);
+		grid1.setBounds(35, 50, 800, 200);
+		add(grid1);
+
 		
 	}
 	void M_border(JButton b[]) {
