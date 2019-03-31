@@ -1,6 +1,7 @@
 package javaProject;
 
 import java.util.*;
+import AdminChat.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -112,7 +113,7 @@ public class GUI extends JFrame {
 					else if(n == 1) {
 						dispose();//login 芒 昏力
 						
-						Menu j3 = new Menu("Menu");// 货 Menu 芒 积己
+						Menu j3 = new Menu("Menu",id.getText());// 货 Menu 芒 积己
 						j3.id(id.getText());
 						j3.setVisible(true);
 						j3.setSize(882, 600);//农扁 汲沥
@@ -155,7 +156,7 @@ public class GUI extends JFrame {
 		
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		GUI j1 = new GUI();
 		
 		

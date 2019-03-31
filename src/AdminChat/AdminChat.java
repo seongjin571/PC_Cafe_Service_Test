@@ -24,7 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-class SFrame extends JFrame implements ActionListener {
+public class AdminChat extends JFrame implements ActionListener,Runnable {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
@@ -33,11 +33,11 @@ class SFrame extends JFrame implements ActionListener {
 	Font f1;
 	static ServerSocket serverSocket = null;
 	static Socket clientSocket = null;
-	static PrintWriter out;
+	static PrintWriter out; 
 	static BufferedReader in;
 	static String inputLine, outputLine;
 
-	public SFrame() {
+	public AdminChat() {
 		setSize(550, 600);
 		f1 = new Font("돋움", Font.BOLD, 30);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,6 +59,7 @@ class SFrame extends JFrame implements ActionListener {
 		add(panel2, BorderLayout.NORTH);
 		add(panel);
 		setVisible(true);
+
 	}
 
 	@Override
@@ -72,9 +73,18 @@ class SFrame extends JFrame implements ActionListener {
 		}
 	} 
 
+	
+	public String nowTime(){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
+		LocalDateTime time = LocalDateTime.now();
+		String nowTime = " ["+time.format(formatter)+"]";
+		return nowTime;
+		
+	}
 
-
-	public void serverStart() throws IOException {
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		System.out.println("서버 시작!");
 		try {
 			serverSocket = new ServerSocket(3000);
@@ -89,32 +99,37 @@ class SFrame extends JFrame implements ActionListener {
 			System.err.println("accept() 실패 ");
 			System.exit(1);
 		}
-		out = new PrintWriter(clientSocket.getOutputStream(), true);
-		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		try {
+			out = new PrintWriter(clientSocket.getOutputStream(), true);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		textArea.append("클라이언트가 접속되었습니다.\n");
-		while ((inputLine = in.readLine()) != null) {
-			String s = inputLine + " "+ nowTime()+"\n";
-			textArea.append(s);
-//			if (outputLine.equals("quit"))
-//				break;
+		try {
+			while ((inputLine = in.readLine()) != null) {
+				String s = inputLine + " "+ nowTime()+"\n";
+				textArea.append(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		out.close();
-		in.close();
-	}
-	public String nowTime(){
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
-		LocalDateTime time = LocalDateTime.now();
-		String nowTime = " ["+time.format(formatter)+"]";
-		return nowTime;
-		
+		try {
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 
-public class AdminChat { 
-	public static void main(String[] args) throws IOException { 
-		SFrame f = new SFrame(); 
-		
-		f.serverStart();
-		} 
-	}
+
 

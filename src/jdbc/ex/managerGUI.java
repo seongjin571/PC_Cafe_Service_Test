@@ -1,6 +1,7 @@
 package jdbc.ex;
 
 import java.awt.*;
+import AdminChat.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -22,7 +23,8 @@ import jdbc.dto.Stock;
 
 public class managerGUI extends JFrame implements ActionListener, WindowListener{
 	 	
-	   JPanel contentPane,grid1,grid2,grid3;
+	private static final long serialVersionUID = 1L;
+	JPanel contentPane,grid1,grid2,grid3;
 	   JButton btn1,btn2,btn3;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
 	   JButton btn15,btn16,btn17,btn18;
@@ -187,7 +189,10 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		// TODO Auto-generated method stub
 		if(e.getSource()==btn1) new managerGUI().showStock();
 		else if(e.getSource()==btn2) new managerGUI().showStock();
-		else if(e.getSource()==btn3) new managerGUI().showStock();
+		else if(e.getSource()==btn3) {
+			AdminChat adminChat = new AdminChat();
+			new Thread(adminChat).start();
+		}
 		
 		
 		if(e.getSource()==btn4 || e.getSource()==btn5 || e.getSource()==btn6 || e.getSource()==btn7 || e.getSource()==btn8 || e.getSource()==btn9 ||e.getSource()==btn10 ||e.getSource()==btn11 || e.getSource()==btn12 || e.getSource()==btn13 || e.getSource()==btn14) {

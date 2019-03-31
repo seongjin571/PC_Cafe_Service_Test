@@ -23,28 +23,32 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-class ClientFrame extends JFrame implements ActionListener {
+public class ClientChat extends JFrame implements ActionListener,Runnable {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
 	JTextField textInput;
 	JLabel name;
+	JPanel panel, panel2;
 	Font f1;
+	String userName;
 	static PrintWriter out = null;
 	static BufferedReader in = null;
 
-	public ClientFrame() {
+	public ClientChat(String userName) {
+		this.userName = userName;
 		setSize(550, 600);
 		f1 = new Font("돋움", Font.BOLD, 30);
 		setTitle("SeJong Pc Cafe");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		name = new JLabel("SeJong Pc Cafe 채팅방");
 		name.setFont(f1);
-		JPanel panel2 = new JPanel();
+		panel2 = new JPanel();
 		textArea = new JTextArea(25, 40);
 		textInput = new JTextField(20);
-		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER,0), JComponent.WHEN_FOCUSED);
+		textInput.registerKeyboardAction(this, "input", KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0),
+				JComponent.WHEN_FOCUSED);
 		but_input = new JButton("입력");
 		but_input.setActionCommand("input");
 		but_input.addActionListener(this);
@@ -55,19 +59,31 @@ class ClientFrame extends JFrame implements ActionListener {
 		add(panel2, BorderLayout.NORTH);
 		add(panel);
 		setVisible(true);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand() == "input") {
-			String s = "손님 : " + textInput.getText();
-			textArea.append(s + " "+ nowTime()+"\n");
+			String s = userName+": " + textInput.getText();
+			textArea.append(s + " " + nowTime() + "\n");
 			out.println(s);
 			textInput.setText("");
 		}
 	}
 
-	public void client() throws IOException {
+
+	public String nowTime() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
+		LocalDateTime time = LocalDateTime.now();
+		String nowTime = " [" + time.format(formatter) + "]";
+		return nowTime;
+
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
 		Socket socket = null;
 		try {
 			socket = new Socket("localhost", 3000);
@@ -81,27 +97,28 @@ class ClientFrame extends JFrame implements ActionListener {
 			System.exit(1);
 		}
 		String fromServer;
-		while ((fromServer = in.readLine()) != null) {
-			String s = fromServer + " "+ nowTime()+"\n";
-			textArea.append(s);
+		try {
+			while ((fromServer = in.readLine()) != null) {
+				String s = fromServer + " " + nowTime() + "\n";
+				textArea.append(s);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		out.close();
-		in.close();
-		socket.close();
-	}
-	
-	public String nowTime(){
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
-		LocalDateTime time = LocalDateTime.now();
-		String nowTime = " ["+time.format(formatter)+"]";
-		return nowTime;
+		try {
+			in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-	}
-}
-
-public class UserChat {
-	public static void main(String[] args) throws IOException {
-		ClientFrame f = new ClientFrame();
-		f.client();
 	}
 }
