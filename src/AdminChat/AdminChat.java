@@ -39,7 +39,7 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 	static BufferedReader in;
 	static String inputLine, outputLine;
 
-	public AdminChat() {
+	public void chatStart() {
 		setSize(550, 600);
 		f1 = new Font("돋움", Font.BOLD, 30);
 		addWindowListener(this);
@@ -87,7 +87,7 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		System.out.println("서버 시작!");
+		System.out.println("서버 시작!!");
 		try {
 			serverSocket = new ServerSocket(3000);
 		} catch (IOException e) {
@@ -99,7 +99,6 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 			clientSocket = serverSocket.accept();
 		} catch (IOException e) {
 			System.err.println("accept() 실패 ");
-			System.exit(1);
 		}
 		try {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -113,6 +112,7 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		chatStart();
 		textArea.append("클라이언트가 접속되었습니다.\n");
 		try {
 			while ((inputLine = in.readLine()) != null) {

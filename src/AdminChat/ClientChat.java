@@ -41,8 +41,8 @@ public class ClientChat extends JFrame implements ActionListener,Runnable,Window
 		this.userName = userName;
 		setSize(550, 600);
 		f1 = new Font("돋움", Font.BOLD, 30);
+		addWindowListener(this);
 		setTitle("SeJong Pc Cafe");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
 		name = new JLabel("SeJong Pc Cafe 채팅방");
 		name.setFont(f1);
@@ -91,12 +91,13 @@ public class ClientChat extends JFrame implements ActionListener,Runnable,Window
 			socket = new Socket("localhost", 3000);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			textArea.append("채팅을 시작합니다. 욕설은 삼가해주세요.\n");
 		} catch (UnknownHostException e) {
 			System.err.println("localhost에 접근할 수 없습니다.");
-			System.exit(1);
+//			System.exit(1);
 		} catch (IOException eg) {
-			System.err.println("입출력 오류11");
-			System.exit(1);
+			eg.printStackTrace();
+			textArea.append("연결에 실패하였습니다. 관리자에게 문의하세요.");
 		}
 		String fromServer;
 		try {
