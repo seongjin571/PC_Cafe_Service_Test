@@ -141,13 +141,13 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 	@Override
 	public void windowClosed(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		System.exit(0);
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		System.exit(0);
+		
 	}
 
 	@Override
