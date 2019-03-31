@@ -244,11 +244,10 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		if(e.getSource()==btn16) {
 			if(Integer.parseInt(text.getText())>0) {
 				new PCDao().useStock(str,-Integer.parseInt(text.getText()));
-				System.exit(0);
+				setVisible(false);
 				new managerGUI().showStock();
 			}
 			else {
-				
 			}
 		}
 		else if(e.getSource()==btn17) new managerGUI().sale();
