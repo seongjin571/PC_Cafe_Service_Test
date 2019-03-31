@@ -9,13 +9,15 @@ import java.awt.event.ItemListener;
 
 import javax.swing.*;
 
+import AdminChat.ClientChat;
 import jdbc.dto.user;
 import jdbc.dao.*;
 import jdbc.dto.*;
 
 
-public class Menu extends JFrame{
-	
+public class Menu extends JFrame implements ActionListener{
+
+	private static final long serialVersionUID = 1L;
 	JLabel status0, status1, status2, status3, ice_hot, size, shot;
 	JPanel background, choice1, choice2, choice3, grid1;
 	JButton b[], chat, cancle, pay;
@@ -23,16 +25,30 @@ public class Menu extends JFrame{
 	ButtonGroup group1, group2, group3;
 	user_inf u_inf = new user_inf();
 	int i, b_price=0, s_price=0, flag=0;
-	
-	Menu(String str){
-		super(str);
-		setLayout(null); //레이아웃 내가 원하는 위치로
+	String userName;
 
-		
+	Menu(String str, String userName) {
+		super(str);
+		this.userName = userName;
+		setLayout(null); // 레이아웃 내가 원하는 위치로
+
+		background = new JPanel();
+		background.setBackground(Color.PINK);
+		background.setBounds(0, 0, 900, 300);
+		add(background);
+
 		M_button();
 		M_border(b);
 		M_sorder(b);
-		M_chat();
+		chat = new JButton("채팅");
+		chat.setActionCommand("chat"); 
+		chat.addActionListener(this);
+		chat.setBounds(110, 453, 200, 50);// 위치, 크기 설정
+		chat.setBackground(new Color(210, 50, 50));// 색상 빨간색
+		chat.setFont(new Font("", Font.PLAIN, 17));// 글씨체 설정
+		chat.setForeground(new Color(255, 255, 255));// 글씨 하얀색
+		chat.setBorderPainted(false);
+		add(chat);
 	}
 	void id(String id) {
 		
@@ -414,14 +430,10 @@ public class Menu extends JFrame{
 		
 	}
 	
-	void M_chat() {
-		chat = new JButton("chatting");
-		
-		chat.setBounds(110,453,200,50);//위치, 크기 설정
-		chat.setBackground(new Color(210,50,50));//색상 빨간색
-		chat.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
-		chat.setForeground(new Color(255,255,255));//글씨 하얀색
-		chat.setBorderPainted(false);
-		add(chat);
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand() == "chat") {
+			ClientChat clientChat = new ClientChat(userName);
+			new Thread(clientChat).start();
+		}
 	}
 }
