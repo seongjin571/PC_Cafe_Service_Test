@@ -22,6 +22,9 @@ class string_checker{
 	static {
 		filter.add("½Ã¹ß");
 		filter.add("¹ÌÄ£");
+		filter.add("¾¾¹ß");
+		filter.add("Áö¶ö");
+		
 	}
 	public String check(String input) {
 		Iterator<String> it=filter.iterator();
