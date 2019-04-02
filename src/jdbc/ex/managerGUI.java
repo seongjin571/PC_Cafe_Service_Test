@@ -25,7 +25,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	 	
 	private static final long serialVersionUID = 1L;
 	JPanel contentPane,contentPane1,contentPane2,grid1,grid2,grid3,grid4;
-	   JButton btn1,btn2,btn3;
+	   JButton btn1,btn2;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
 	   JButton btn16,btn17,btn18;
 	   JButton btn19,btn20,btn21;
@@ -210,9 +210,6 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	       btn2=new JButton("재고관리");
 	       grid3.add(btn2);
 		   btn2.addActionListener(this);
-		   btn3=new JButton("채팅");
-	       grid3.add(btn3);
-	       btn3.addActionListener(this);
 		
 	       grid3.setBounds(60,600,500,80);
 	       add(grid3);
@@ -235,10 +232,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		else if(e.getSource()==btn2) {
 			new managerGUI().showStock();
 		}
-//		else if(e.getSource()==btn3) {
-//			AdminChat adminChat = new AdminChat();
-//			new Thread(adminChat).start();
-//		}
+
 		
 		if(e.getSource()==btn16) {
 			try {
