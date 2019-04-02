@@ -235,10 +235,10 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		else if(e.getSource()==btn2) {
 			new managerGUI().showStock();
 		}
-		else if(e.getSource()==btn3) {
-			AdminChat adminChat = new AdminChat();
-			new Thread(adminChat).start();
-		}
+//		else if(e.getSource()==btn3) {
+//			AdminChat adminChat = new AdminChat();
+//			new Thread(adminChat).start();
+//		}
 		
 		if(e.getSource()==btn16) {
 			try {
