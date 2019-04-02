@@ -49,7 +49,7 @@ public class AdminChat extends JFrame implements ActionListener, WindowListener 
 				chatting.start();
 			}
 		} catch (IOException e) {
-			System.out.println("해당 포트 번호에 연결할 수 없습니다");
+			System.out.println("해당 포트 번호에 연결할 수 없습니다!");
 			System.exit(1);
 		}
 	}
