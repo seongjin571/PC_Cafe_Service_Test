@@ -108,22 +108,7 @@ class Chatting extends Thread{
 
 	@Override
 	public void run() {
-		System.out.print("접속 시작1");
-		// TODO Auto-generated method stub
-//		System.out.println("서버 시작!!");
-//		try {
-//			serverSocket = new ServerSocket(3000);
-//		} catch (IOException e) {
-//			System.out.println("해당 포트 번호에 연결할 수 없습니다");
-//			System.exit(1);
-//		}
-//		clientSocket = null;
-	
-//		try {
-//			clientSocket = serverSocket.accept();
-//		} catch (IOException e) {
-//			System.err.println("accept() 실패 ");
-//		}
+		
 		try {
 			out = new PrintWriter(client.getOutputStream(), true);
 		} catch (IOException e) {
@@ -139,7 +124,6 @@ class Chatting extends Thread{
 //		chatStart();
 		chatStart();
 		textArea.append("클라이언트가 접속되었습니다.\n");
-		System.out.print("접속 시작2");
 		try {
 			while ((inputLine = in.readLine()) != null) {
 				String s = inputLine + " "+ nowTime()+"\n";
