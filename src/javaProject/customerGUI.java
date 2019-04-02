@@ -116,7 +116,6 @@ public class customerGUI extends JFrame {
 						dispose();//login 창 삭제
 						
 						Menu j3 = new Menu("Menu",id.getText());// 새 Menu 창 생성
-						j3.id(id.getText());
 						j3.setVisible(true);
 						j3.setSize(882, 600);//크기 설정
 						j3.setLocation(500, 100);//생성될 위치 설정
