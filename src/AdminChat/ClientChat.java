@@ -94,7 +94,7 @@ public class ClientChat extends JFrame implements ActionListener,Runnable,Window
 		// TODO Auto-generated method stub
 		Socket socket = null;
 		try {
-			socket = new Socket("localhost", 3000);
+			socket = new Socket("25.29.205.186", 3000);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			textArea.append("채팅을 시작합니다. 욕설은 삼가해주세요.\n");
