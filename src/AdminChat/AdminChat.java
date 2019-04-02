@@ -127,6 +127,7 @@ class Chatting extends Thread{
 //		chatStart();
 		chatStart();
 		textArea.append("클라이언트가 접속되었습니다.\n");
+
 		try {
 			String return_str;
 			string_checker ck = new string_checker();//d
