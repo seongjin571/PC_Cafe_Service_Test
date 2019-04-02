@@ -66,9 +66,14 @@ public class ClientChat extends JFrame implements ActionListener,Runnable,Window
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {	//client to Server
+		string_checker ck = new string_checker();
 		if (e.getActionCommand() == "input") {
-			String s = userName+": " + textInput.getText();
+			String in_str,return_str=null;
+			in_str=textInput.getText();
+			return_str=ck.check(in_str);
+			
+			String s = userName+": " + return_str;
 			textArea.append(s + " " + nowTime() + "\n");
 			out.println(s);
 			textInput.setText("");
