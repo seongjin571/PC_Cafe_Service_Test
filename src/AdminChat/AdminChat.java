@@ -83,15 +83,18 @@ public class AdminChat extends JFrame implements ActionListener, WindowListener 
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		string_checker ck = new string_checker();
 		String s;
-		s = "관리자 : " + textInput.getText();
+		String in_str,return_str=null;
+		in_str=textInput.getText();
+		return_str=ck.check(in_str);
+		s = "관리자 : " + return_str;
 		if (e.getActionCommand() == "input") {
 			textArea.append(s + " "+ nowTime()+"\n");
 			out.println(s);
 			textInput.setText("");
 		}
 	} 
-
 
 	public String nowTime(){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
@@ -125,8 +128,11 @@ class Chatting extends Thread{
 		chatStart();
 		textArea.append("클라이언트가 접속되었습니다.\n");
 		try {
+			String return_str;
+			string_checker ck = new string_checker();//d
 			while ((inputLine = in.readLine()) != null) {
-				String s = inputLine + " "+ nowTime()+"\n";
+				return_str=ck.check(inputLine);
+				String s = return_str + " " + nowTime() + "\n";
 				textArea.append(s);
 			}
 		} catch (IOException e) {
