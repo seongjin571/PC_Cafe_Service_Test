@@ -24,7 +24,7 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 	JRadioButton ice, hot, small, tall, large, yes, no;
 	ButtonGroup group1, group2, group3;
 	user_inf u_inf = new user_inf();
-	int i, b_price=0, s_price=0, flag=0;
+	int i, b_price=0, B_price=0, s_price=0, flag=0, b_num;
 	String userName;
 
 	Menu(String str, String userName) {
@@ -146,79 +146,14 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		size.setFont(new Font("",Font.BOLD,15));
 		shot.setFont(new Font("",Font.BOLD,15));//글씨체 설정
 		
-		ice.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				status2.setText("");
-				status3.setText("");
-				status1.setText(status0.getText());
-				status1.setText(status1.getText()+"/ ICE");
-			}
-		});
-		hot.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				status2.setText("");
-				status3.setText("");
-				status1.setText(status0.getText());
-				status1.setText(status1.getText()+"/ HOT");
-			}
-		});
-		
-		status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
-		add(status1);
-	
-		small.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				b_price=0;
-				status3.setText("");
-				status2.setText(status1.getText());
-				status2.setText(status2.getText()+"/ SMALL");
-				b_price=1000;
-			}
-		});
-		
-		tall.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				b_price=0;
-				status3.setText("");
-				status2.setText(status1.getText());
-				status2.setText(status2.getText()+"/ TALL");
-				b_price=1500;
-			}
-		});
-		
-		large.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				b_price=0;
-				status3.setText("");
-				status2.setText(status1.getText());
-				status2.setText(status2.getText()+"/ LARGE");
-				b_price=2000;
-			}
-		});
-		
-		status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
-		add(status2);
-		
-		yes.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				status3.setText(status2.getText());
-				status3.setText(status3.getText()+"/ YES");
-				status3.setText(status3.getText()+"/ "+b_price+"원");
-			}
-		});
+		hot.addActionListener(this);
+		ice.addActionListener(this);
+		small.addActionListener(this);
+		tall.addActionListener(this);
+		large.addActionListener(this);
+		yes.addActionListener(this);
+		no.addActionListener(this);
 
-		no.addItemListener(new ItemListener(){
-			public void itemStateChanged(ItemEvent e) {
-				status3.setText(status2.getText());
-				status3.setText(status3.getText()+"/ NO");
-				status3.setText(status3.getText()+"/ "+b_price+"원");
-			}
-		});
-		status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
-		add(status3);
-
-		
-		
 	}
 	void choice() {
 
@@ -254,8 +189,92 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			ClientChat clientChat = new ClientChat(userName);
 			new Thread(clientChat).start();
 		}
-		else if(e.getSource()==b[0]||e.getSource()==b[1]||e.getSource()==b[2]) {
-
+		else if(e.getSource()==hot) {
+			add(status1);
+			status2.setText("");
+			status3.setText("");
+			status1.setText(status0.getText());
+			if(b_num==2) //아이스티는 ice 만
+				status1.setText(status1.getText()+"/ ICE");
+			else
+				status1.setText(status1.getText()+"/ HOT");
+			status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status1);
+			
+		}
+		else if(e.getSource()==ice) {
+			add(status1);
+			status2.setText("");
+			status3.setText("");
+			status1.setText(status0.getText());
+			status1.setText(status1.getText()+"/ ICE");
+			status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status1);
+		} 
+		else if(e.getSource()==small) {
+			add(status2);
+			b_price=0;
+			status3.setText("");
+			status2.setText(status1.getText());
+			status2.setText(status2.getText()+"/ SMALL");
+			if(b_num==1)//카페라떼일 경우
+				b_price=1500;
+			else
+				b_price=1000;
+			status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status2);	
+		}
+		else if(e.getSource()==tall) {
+			add(status2);
+			b_price=0;
+			status3.setText("");
+			status2.setText(status1.getText());
+			status2.setText(status2.getText()+"/ TALL");
+			if(b_num==1)//카페라떼일 경우
+				b_price=2000;
+			else
+				b_price=1500;
+			status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status2);
+		}
+		else if(e.getSource()==large) {
+			add(status2);
+			b_price=0;
+			status3.setText("");
+			status2.setText(status1.getText());
+			status2.setText(status2.getText()+"/ LARGE");
+			if(b_num==1)//카페라떼일 경우
+				b_price=2500;
+			else
+				b_price=2000;
+			status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status2);
+		}
+		else if(e.getSource()==yes) {
+			add(status3);
+			B_price = b_price;
+			status3.setText(status2.getText());
+			if(b_num==2) //아이스티는 no 샷
+				status3.setText(status3.getText()+"/ NO");
+			else {
+				status3.setText(status3.getText()+"/ YES");
+				B_price+=500;
+			}
+			status3.setText(status3.getText()+"/ "+B_price+"원");
+			status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status3);
+		}
+		else if(e.getSource()==no) {
+			add(status3);
+			B_price=b_price;
+			status3.setText(status2.getText());
+			status3.setText(status3.getText()+"/ NO");
+			status3.setText(status3.getText()+"/ "+B_price+"원");
+			status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status3);
+		}
+		else if(e.getSource()==b[0]) {
+			b_num=0;
 			add(status0);
 			status0.setText("");
 			status1.setText("");
@@ -265,7 +284,34 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			status0.setBounds(500,370,300,80);
 			status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 			choice();
-			
+
+			add(status0);
+		}
+		
+		else if(e.getSource()==b[1]) {
+			b_num=1;
+			add(status0);
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			status0.setText(e.getActionCommand());
+			status0.setBounds(500,370,300,80);
+			status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			choice();
+			add(status0);
+		}
+		else if(e.getSource()==b[2]) {
+			b_num=2;
+			add(status0);
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			status0.setText(e.getActionCommand());
+			status0.setBounds(500,370,300,80);
+			status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			choice();
 			add(status0);
 		}
 		
