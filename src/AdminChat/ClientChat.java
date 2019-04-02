@@ -102,8 +102,11 @@ public class ClientChat extends JFrame implements ActionListener,Runnable,Window
 		}
 		String fromServer;
 		try {
+			String return_str;
+			string_checker ck = new string_checker();//d
 			while ((fromServer = in.readLine()) != null) {
-				String s = fromServer + " " + nowTime() + "\n";
+				return_str=ck.check(fromServer);
+				String s = return_str + " " + nowTime() + "\n";
 				textArea.append(s);
 			}
 		} catch (IOException e) {
