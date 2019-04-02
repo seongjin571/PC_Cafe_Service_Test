@@ -270,15 +270,15 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		else if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[5]||e.getSource()==b[6]||e.getSource()==b[7]||e.getSource()==b[8]||e.getSource()==b[9]) {
-			
-			
-
 		
 			status0.setText("");
 			status1.setText("");
 			status2.setText("");
 			status3.setText("");
-			status0.setText(e.getActionCommand()+" 2000원");
+			if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[6]||e.getSource()==b[9])
+				status0.setText(e.getActionCommand()+" 2000원");
+			else
+				status0.setText(e.getActionCommand()+" 1000원");
 			status0.setBounds(590,370,300,80);
 			status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 			add(status0);

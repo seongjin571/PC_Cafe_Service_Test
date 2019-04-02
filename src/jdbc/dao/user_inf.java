@@ -177,7 +177,7 @@ public class user_inf {
 		 try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
-			String sql = "update user_inf set u_price ?";
+			String sql = "update user_inf set u_price =" + "where u_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
