@@ -24,7 +24,7 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 	JRadioButton ice, hot, small, tall, large, yes, no;
 	ButtonGroup group1, group2, group3;
 	user_inf u_inf = new user_inf();
-	int i, b_price=0, B_price=0, s_price=0, flag=0, b_num;
+	int i, b_price=0, price=0, flag=0, b_num;
 	String userName;
 
 	Menu(String str, String userName) {
@@ -36,23 +36,7 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		M_button();
 		M_bchoice();
 
-		cancle = new JButton("Cancle");
-		pay = new JButton("Pay");
 		
-		cancle.setBounds(490, 450, 100, 50);
-		pay.setBounds(680, 450, 100, 50);
-		
-		add(cancle);
-		add(pay);
-		
-		cancle = new JButton("Cancle");
-		pay = new JButton("Pay");
-		
-		cancle.setBounds(490, 450, 100, 50);
-		pay.setBounds(680, 450, 100, 50);
-		
-		add(cancle);
-		add(pay);
 		
 		chat = new JButton("채팅");
 		chat.setActionCommand("chat"); 
@@ -63,11 +47,6 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		chat.setForeground(new Color(255, 255, 255));// 글씨 하얀색
 		chat.setBorderPainted(false);
 		add(chat);
-	}
-	void id(String id) {
-		
-		//u_inf.updateprice(id);
-		
 	}
 	void M_button() {
 		
@@ -99,6 +78,16 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		grid1.setBounds(35, 50, 800, 200);
 		add(grid1);
 
+		
+		cancle = new JButton("Cancle");
+		pay = new JButton("Pay");
+		
+		cancle.setBounds(490, 450, 100, 50);
+		pay.setBounds(680, 450, 100, 50);
+		
+		add(cancle);
+		add(pay);
+		
 		b[0].addActionListener(this);
 		b[1].addActionListener(this);
 		b[2].addActionListener(this);
@@ -109,7 +98,11 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		b[7].addActionListener(this);
 		b[8].addActionListener(this);
 		b[9].addActionListener(this);
+		
+		cancle.addActionListener(this);
+		pay.addActionListener(this);
 
+		
 	}
 		
 	void M_bchoice() {
@@ -252,25 +245,38 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		}
 		else if(e.getSource()==yes) {
 			add(status3);
-			B_price = b_price;
+			price = b_price;
 			status3.setText(status2.getText());
 			if(b_num==2) //아이스티는 no 샷
 				status3.setText(status3.getText()+"/ NO");
 			else {
 				status3.setText(status3.getText()+"/ YES");
-				B_price+=500;
+				price+=500;
 			}
-			status3.setText(status3.getText()+"/ "+B_price+"원");
+			status3.setText(status3.getText()+"/ "+price+"원");
 			status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 			add(status3);
 		}
 		else if(e.getSource()==no) {
 			add(status3);
-			B_price=b_price;
+			price=b_price;
 			status3.setText(status2.getText());
 			status3.setText(status3.getText()+"/ NO");
-			status3.setText(status3.getText()+"/ "+B_price+"원");
+			status3.setText(status3.getText()+"/ "+price+"원");
 			status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			add(status3);
+		}
+		else if(e.getSource()==pay) {
+			int p=u_inf.getPrice(userName);
+			u_inf.updateprice(userName, p, price);
+			
+		}
+		else if(e.getSource()==cancle) {
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			price=0;
 			add(status3);
 		}
 		else if(e.getSource()==b[0]) {
@@ -321,10 +327,15 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			status1.setText("");
 			status2.setText("");
 			status3.setText("");
-			if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[6]||e.getSource()==b[9])
-				status0.setText(e.getActionCommand()+" 2000원");
-			else
-				status0.setText(e.getActionCommand()+" 1000원");
+			if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[6]||e.getSource()==b[9]) {
+				price=2000;
+				status0.setText(e.getActionCommand()+ price+ "원");
+			}
+			
+			else {
+				price=1000;
+				status0.setText(e.getActionCommand()+ price+ "원");
+			}
 			status0.setBounds(590,370,300,80);
 			status0.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 			add(status0);
@@ -340,13 +351,6 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 				choice3.revalidate();
 				choice3.repaint();
 			}
-		}
-		
-		else if(e.getSource()==cancle) {
-			status0.setText("");
-			status1.setText("");
-			status2.setText("");
-			status3.setText("");
 		}
 		
 	}

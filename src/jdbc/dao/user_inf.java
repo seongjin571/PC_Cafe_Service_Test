@@ -131,8 +131,9 @@ public class user_inf {
 				String u_id = rs.getString("u_id");
 				String u_pw = rs.getString("u_pw");
 				if(u_id.equals(id)) {
-					if(u_pw.equals(pw))
+					if(u_pw.equals(pw)) {
 						result = 1;// id, pw 둘다 일치
+					}
 					else
 						result = 2;// id만 일치
 				}
@@ -171,22 +172,66 @@ public class user_inf {
 		return result;
 		
 	}
-	
-	public int updateprice(String id) {
-		 
+	public int getPrice(String id) {
+		 int price =0;
 		 try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
-			String sql = "update user_inf set u_price =" + "where u_id = ?";
+			String sql = "select u_price from user_inf where u_id = ? ";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				
-				int u_price = rs.getInt("u_price");
-				return u_price;
+			if(rs.next()) {
+				price = rs.getInt("u_price");
 			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(ps!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(conn!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		 
+		 return price;
+	 }	
+	public int updateprice(String id, int price1, int price2) {
+		 
+		int result = 0;
+		 try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
+			String sql = "update user_inf set u_price ="+price1+price2+" where u_id = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, id);
+			result = ps.executeUpdate();
+			
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -222,7 +267,8 @@ public class user_inf {
 				}
 			}
 		}
-		 return 0;
+		 return result;
 	 }
+	
 	
 }
