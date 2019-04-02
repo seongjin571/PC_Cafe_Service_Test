@@ -124,6 +124,7 @@ class Chatting extends Thread{
 //		chatStart();
 		chatStart();
 		textArea.append("클라이언트가 접속되었습니다.\n");
+
 		try {
 			while ((inputLine = in.readLine()) != null) {
 				String s = inputLine + " "+ nowTime()+"\n";
