@@ -293,16 +293,17 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			add(status3);
 		}
 		else if(e.getSource()==pay) {
-			
-			int p=u_inf.getPrice(userName);
-			u_inf.updatePrice(userName, p, price);
 			for(int i = 0 ; i < 10 ; i++) {
 				if((b_num==i)&&(b_num>2)) {
+					int p=u_inf.getPrice(userName);
+					u_inf.updatePrice(userName, p, price);
 					u_inf.updateOrder(b[i].getText(), price, null, null, null);
 				}
 				else if((b_num==i)&&(b_num<3)) {
 					try {
 						if(i_h.equals("")||s_t_l.equals("")||y_n.equals("")) throw new Exception();
+						int p=u_inf.getPrice(userName);
+						u_inf.updatePrice(userName, p, price);
 						u_inf.updateOrder(b[i].getText(), price, y_n, s_t_l, i_h);
 						}catch(Exception ex) {
 							JOptionPane.showMessageDialog(null, "옵션을 전부 선택해 주십시오.");
