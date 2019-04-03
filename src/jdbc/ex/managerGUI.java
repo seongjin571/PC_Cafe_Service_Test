@@ -235,7 +235,6 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			AdminChat adminChat = new AdminChat();
 			new Thread(adminChat).start();
 		}
-		
 		if(e.getSource()==btn16) {
 			try {
 				Integer.parseInt(text.getText());
