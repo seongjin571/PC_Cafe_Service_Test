@@ -21,7 +21,7 @@ public class jdbcEx {
 		for(int i=0;i<ingredient.length;i++) {//재고 수가 1개 이거나 2개 이므로 배열에 길이에 맞춰 반복
 			PCDao.useStock(ingredient[i]);//재고 수를 한 개씩 줄여줌
 		}*/
-		//실행 후 stock table 확인하면 해당 재고 수가 하나씩 감소함
+		
 		managerGUI window=new managerGUI();
 		window.managerWindow();
 //		AdminChat adminChat = new AdminChat();

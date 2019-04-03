@@ -24,7 +24,7 @@ import jdbc.dto.Stock;
 public class managerGUI extends JFrame implements ActionListener, WindowListener{
 	 	
 	private static final long serialVersionUID = 1L;
-	JPanel contentPane,contentPane1,contentPane2,grid1,grid2,grid3,grid4;
+	JPanel contentPane,contentPane_sub,grid1,grid2,grid3,grid4;
 	   JButton btn1,btn2,btn3;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
 	   JButton btn16,btn17,btn18;
@@ -34,19 +34,17 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	   JTextField text;
 	   String str;
 	   int count=0;
+	   WindowEvent win=null;
 	   
-	   private CardLayout cards=new CardLayout();
 	   
-	   
-	   public void showStock() {
+	   public void showStock(){
 		   
 		   Object[] colNames; // 열이름 => 1차원 배열
 	       Object[][] data; // 2차원 배열 데이터
-	       
-	       contentPane1=new JPanel();
+	       contentPane_sub=new JPanel();
 	       setTitle("재고 관리 프로그램");
 	       addWindowListener(this);
-	    
+	       
 	       setLayout(null);
 	       
 	       PCDao dao=new PCDao();
@@ -133,7 +131,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			add(grid1);
 			
 			grid2=new JPanel();
-			grid2.setLayout(new GridLayout(1,4,30,30));
+			grid2.setLayout(new GridLayout(1,4,100,100));
 			
 			btn16=new JButton("주문");
 			btn16.addActionListener(this);
@@ -151,17 +149,16 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			add(grid2);
 			setSize(1000, 800);
 			setLocation(800,10);
-			setVisible(true); 	            			   
+			setVisible(true); 	
+			
 	   }
-	   
 	   public void sale() {
 		   
 		   
 	       setTitle("판매 현황");
 	       addWindowListener(this);
 	       setLayout(null);
-	       contentPane2=new JPanel();
-			
+	       contentPane_sub=new JPanel();
 			la4=new JLabel("재고 현황");
 			la4.setBounds(35 , 5, 100, 50);
 			add(la4);
@@ -171,7 +168,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			add(la5);
 			
 			grid4=new JPanel();
-			grid4.setLayout(new GridLayout(1,3,30,30));
+			grid4.setLayout(new GridLayout(1,3,100,100));
 			
 			btn19=new JButton("매출");
 			btn20=new JButton("메뉴별판매");
@@ -224,7 +221,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	       setVisible(true);
 	   
 	   }
-
+	   
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -232,9 +229,11 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		if(e.getSource()==btn1) {
 			new managerGUI().sale();
 		}
+			
 		else if(e.getSource()==btn2) {
 			new managerGUI().showStock();
 		}
+		
 		else if(e.getSource()==btn3) {
 			AdminChat adminChat = new AdminChat();
 			new Thread(adminChat).start();
@@ -272,7 +271,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void windowActivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -290,7 +289,6 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -308,8 +306,9 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	@Override
 	public void windowOpened(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		System.out.println(arg0.getOppositeWindow());
 	}
+	
 	   
 	
 }
