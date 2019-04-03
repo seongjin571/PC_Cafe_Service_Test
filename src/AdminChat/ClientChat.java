@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +25,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-public class ClientChat extends JFrame implements ActionListener,Runnable {
+public class ClientChat extends JFrame implements ActionListener,Runnable,WindowListener {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
@@ -38,9 +40,10 @@ public class ClientChat extends JFrame implements ActionListener,Runnable {
 	public ClientChat(String userName) {
 		this.userName = userName;
 		setSize(550, 600);
+		setLocation(1000,180);
 		f1 = new Font("돋움", Font.BOLD, 30);
+		addWindowListener(this);
 		setTitle("SeJong Pc Cafe");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		panel = new JPanel();
 		name = new JLabel("SeJong Pc Cafe 채팅방");
 		name.setFont(f1);
@@ -63,9 +66,14 @@ public class ClientChat extends JFrame implements ActionListener,Runnable {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e) {	//client to Server
+		string_checker ck = new string_checker();
 		if (e.getActionCommand() == "input") {
-			String s = userName+": " + textInput.getText();
+			String in_str,return_str=null;
+			in_str=textInput.getText();
+			return_str=ck.check(in_str);
+			
+			String s = userName+": " + return_str;
 			textArea.append(s + " " + nowTime() + "\n");
 			out.println(s);
 			textInput.setText("");
@@ -86,20 +94,24 @@ public class ClientChat extends JFrame implements ActionListener,Runnable {
 		// TODO Auto-generated method stub
 		Socket socket = null;
 		try {
-			socket = new Socket("localhost", 3000);
+			socket = new Socket("25.29.205.186", 3000);
 			out = new PrintWriter(socket.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			textArea.append("채팅을 시작합니다. 욕설은 삼가해주세요.\n");
 		} catch (UnknownHostException e) {
 			System.err.println("localhost에 접근할 수 없습니다.");
-			System.exit(1);
+//			System.exit(1);
 		} catch (IOException eg) {
-			System.err.println("입출력 오류11");
-			System.exit(1);
+			eg.printStackTrace();
+			textArea.append("연결에 실패하였습니다. 관리자에게 문의하세요.");
 		}
 		String fromServer;
 		try {
+			String return_str;
+			string_checker ck = new string_checker();//d
 			while ((fromServer = in.readLine()) != null) {
-				String s = fromServer + " " + nowTime() + "\n";
+				return_str=ck.check(fromServer);
+				String s = return_str + " " + nowTime() + "\n";
 				textArea.append(s);
 			}
 		} catch (IOException e) {
@@ -119,6 +131,49 @@ public class ClientChat extends JFrame implements ActionListener,Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		System.exit(0);
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
 		
 	}
 }

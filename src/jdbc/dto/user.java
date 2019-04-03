@@ -17,6 +17,12 @@ public class user {
       this.u_email = u_email;
       this.u_price = u_price;
    }
+   public user(String u_id, String u_pw, int u_price){
+	  //this.id = id;
+	  this.u_id = u_id;
+	  this.u_pw = u_pw;
+	  this.u_price = u_price;
+	   }
    public int getId() {
       return id;
    }

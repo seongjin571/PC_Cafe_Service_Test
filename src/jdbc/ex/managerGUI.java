@@ -24,14 +24,9 @@ import jdbc.dto.Stock;
 public class managerGUI extends JFrame implements ActionListener, WindowListener{
 	 	
 	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
 	JPanel contentPane,contentPane_sub,grid1,grid2,grid3,grid4;
-	   JButton btn1,btn2,btn3;
-=======
-	JPanel contentPane,contentPane1,contentPane2,grid1,grid2,grid3,grid4;
-	   JButton btn1,btn2;
->>>>>>> d832a2dd58c70492365aa850977109c4b4048998
-	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
+	JButton btn1,btn2,btn3;
+	 JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
 	   JButton btn16,btn17,btn18;
 	   JButton btn19,btn20,btn21;
 	   BufferedImage img;
@@ -235,15 +230,11 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		else if(e.getSource()==btn2) {
 			new managerGUI().showStock();
 		}
-<<<<<<< HEAD
 		
 		else if(e.getSource()==btn3) {
 			AdminChat adminChat = new AdminChat();
 			new Thread(adminChat).start();
 		}
-=======
-
->>>>>>> d832a2dd58c70492365aa850977109c4b4048998
 		
 		if(e.getSource()==btn16) {
 			try {

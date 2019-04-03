@@ -6,16 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
 
 import javax.swing.*;
 
+import AdminChat.ClientChat;
 import jdbc.dto.user;
+import jdbc.ex.managerGUI;
 import jdbc.dao.*;
 import jdbc.dto.*;
-import AdminChat.*;
 
-public class Menu extends JFrame implements ActionListener{
+
+public class Menu extends JFrame implements ActionListener, ItemListener{
+
 	private static final long serialVersionUID = 1L;
 	JLabel status0, status1, status2, status3, ice_hot, size, shot;
 	JPanel background, choice1, choice2, choice3, grid1;
@@ -23,53 +25,54 @@ public class Menu extends JFrame implements ActionListener{
 	JRadioButton ice, hot, small, tall, large, yes, no;
 	ButtonGroup group1, group2, group3;
 	user_inf u_inf = new user_inf();
-	String userName;
-	int i, b_price = 0, s_price = 0, flag = 0;
+	int i, b_price=0, price=0, flag=0, b_num;
+	String userName, i_h, s_t_l, y_n;
 
 	Menu(String str, String userName) {
 		super(str);
 		this.userName = userName;
-		setLayout(null); // ë ˆì´ì•„ì›ƒ ë‚´ê°€ ì›í•˜ëŠ” ìœ„ì¹˜ë¡œ
+		setLayout(null); // ·¹ÀÌ¾Æ¿ô ³»°¡ ¿øÇÏ´Â À§Ä¡·Î
 
 
 		M_button();
-		M_border(b);
-		M_sorder(b);
-//		M_chat();
-		chat = new JButton("ì±„íŒ…");
-		chat.setActionCommand("chat");
+		M_bchoice();
+
+		
+		
+		chat = new JButton("Ã¤ÆÃ");
+		chat.setActionCommand("chat"); 
 		chat.addActionListener(this);
-		chat.setBounds(110, 453, 200, 50);// ìœ„ì¹˜, í¬ê¸° ì„¤ì •
-		chat.setBackground(new Color(210, 50, 50));// ìƒ‰ìƒ ë¹¨ê°„ìƒ‰
-		chat.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-		chat.setForeground(new Color(255, 255, 255));// ê¸€ì”¨ í•˜ì–€ìƒ‰
+		chat.setBounds(110, 453, 200, 50);// À§Ä¡, Å©±â ¼³Á¤
+		chat.setBackground(new Color(210, 50, 50));// »ö»ó »¡°£»ö
+		chat.setFont(new Font("", Font.PLAIN, 17));// ±Û¾¾Ã¼ ¼³Á¤
+		chat.setForeground(new Color(255, 255, 255));// ±Û¾¾ ÇÏ¾á»ö
 		chat.setBorderPainted(false);
 		add(chat);
 	}
-
-	void id(String id) {
-
-		// u_inf.updateprice(id);
-
-	}
-
 	void M_button() {
 		
 		grid1 = new JPanel();
+		status0 = new JLabel();
+		status1 = new JLabel();
+		status2 = new JLabel();
+		status3 = new JLabel();
 		grid1.setLayout(new GridLayout(2,5,30,30));
 		b = new JButton[10];
 
-		b[0] = new JButton("ì•„ë©”ë¦¬ì¹´ë…¸");
-		b[1] = new JButton("ì¹´í˜ë¼ë–¼");
-		b[2] = new JButton("ì•„ì´ìŠ¤í‹°");
-		b[3] = new JButton("ì§„ë¼ë©´");
-		b[4] = new JButton("ì§œíŒŒê²Œí‹°");
-		b[5] = new JButton("ìƒˆìš°ê¹¡");
-		b[6] = new JButton("í™ˆëŸ°ë³¼");
-		b[7] = new JButton("ëˆ„ë„¤ë ë„¤");
-		b[8] = new JButton("ê±´ë¹µ");
-
-		b[9] = new JButton("í•«ë„ê·¸");//ë©”ë‰´ ë²„íŠ¼ ìƒì„±
+		status1.setBounds(500,370,300,80);
+		status2.setBounds(500,370,300,80);
+		status3.setBounds(500,370,300,80);
+		
+		b[0] = new JButton("¾Æ¸Ş¸®Ä«³ë");
+		b[1] = new JButton("Ä«Æä¶ó¶¼");
+		b[2] = new JButton("¾ÆÀÌ½ºÆ¼");
+		b[3] = new JButton("Áø¶ó¸é");
+		b[4] = new JButton("Â¥ÆÄ°ÔÆ¼");
+		b[5] = new JButton("»õ¿ì±ø");
+		b[6] = new JButton("È¨·±º¼");
+		b[7] = new JButton("´©³×¶ì³×");
+		b[8] = new JButton("°Ç»§");
+		b[9] = new JButton("ÇÖµµ±×");//¸Ş´º ¹öÆ° »ı¼º
 		
 		for(i=0;i<10;i++)
 			grid1.add(b[i]);
@@ -77,378 +80,351 @@ public class Menu extends JFrame implements ActionListener{
 		add(grid1);
 
 		
-
-	}
-
-	void M_border(JButton b[]) {
-		status0 = new JLabel();
-		status1 = new JLabel();
-		status2 = new JLabel();
-		status3 = new JLabel();
-
-		b[0].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				M_bchoice();
-
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[0].getText());
-				status0.setBounds(500, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-		b[1].addActionListener(new ActionListener() {// ì¹´í˜ë¼ë–¼ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				M_bchoice();
-
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[1].getText());
-				status0.setBounds(500, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-		b[2].addActionListener(new ActionListener() {// ì•„ì´ìŠ¤í‹° í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				M_bchoice();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[2].getText());
-				status0.setBounds(500, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-	}
-
-	void remove() {
-		choice1.removeAll();
-		choice1.revalidate();
-		choice1.repaint();
-		choice2.removeAll();
-		choice2.revalidate();
-		choice2.repaint();
-		choice3.removeAll();
-		choice3.revalidate();
-		choice3.repaint();
-	}
-
-	void M_sorder(JButton b[]) {
-
-		b[3].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[3].getText() + " 2000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
-		b[4].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[4].getText() + " 2000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
-		b[5].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[5].getText() + " 1000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
-		b[6].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[6].getText() + " 2000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
-		b[7].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[7].getText() + " 1000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
-		b[8].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[8].getText() + " 1000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
-		b[9].addActionListener(new ActionListener() {// ì•„ë©”ë¦¬ì¹´ë…¸ í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (flag == 3)
-					remove();
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-				status0.setText(b[9].getText() + " 2000ì›");
-				status0.setBounds(590, 370, 300, 80);
-				status0.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-				add(status0);
-			}
-		});
-
 		cancle = new JButton("Cancle");
 		pay = new JButton("Pay");
-
+		
 		cancle.setBounds(490, 450, 100, 50);
 		pay.setBounds(680, 450, 100, 50);
-
+		
 		add(cancle);
 		add(pay);
+		
+		b[0].addActionListener(this);
+		b[1].addActionListener(this);
+		b[2].addActionListener(this);
+		b[3].addActionListener(this);
+		b[4].addActionListener(this);
+		b[5].addActionListener(this);
+		b[6].addActionListener(this);
+		b[7].addActionListener(this);
+		b[8].addActionListener(this);
+		b[9].addActionListener(this);
+		
+		cancle.addActionListener(this);
+		pay.addActionListener(this);
 
-		cancle.addActionListener(new ActionListener() {// cancle í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-			}
-		});
+		
 	}
-
+		
 	void M_bchoice() {
-		flag = 3;
+		flag=3;
 		choice1 = new JPanel();
 		choice2 = new JPanel();
 		choice3 = new JPanel();
-
+		
 		group1 = new ButtonGroup();
 		ice = new JRadioButton("ICE");
 		hot = new JRadioButton("HOT");
 		group1.add(ice);
-		group1.add(hot);// ice, hot ë¼ë””ì˜¤ë²„íŠ¼ ìƒì„±
-
+		group1.add(hot);//ice, hot ¶óµğ¿À¹öÆ° »ı¼º
+		
 		group2 = new ButtonGroup();
 		small = new JRadioButton("SMALL");
 		tall = new JRadioButton("TALL");
 		large = new JRadioButton("LARGE");
 		group2.add(small);
 		group2.add(tall);
-		group2.add(large);// s,t,l ë¼ë””ì˜¤ë²„íŠ¼ ìƒì„±
-
+		group2.add(large);//s,t,l ¶óµğ¿À¹öÆ° »ı¼º
+		
 		group3 = new ButtonGroup();
 		yes = new JRadioButton("YES");
 		no = new JRadioButton("NO");
 		group3.add(yes);
-		group3.add(no);// shot ë¼ë””ì˜¤ë²„íŠ¼ ìƒì„±
-
+		group3.add(no);//shot ¶óµğ¿À¹öÆ° »ı¼º
+		
 		ice_hot = new JLabel("ICE / HOT");
 		size = new JLabel("SIZE");
-		shot = new JLabel("SHOT");// í…ìŠ¤íŠ¸ ì„¤ì •
+		shot = new JLabel("SHOT");//ÅØ½ºÆ® ¼³Á¤
+		
+		ice_hot.setFont(new Font("",Font.BOLD,15));
+		size.setFont(new Font("",Font.BOLD,15));
+		shot.setFont(new Font("",Font.BOLD,15));//±Û¾¾Ã¼ ¼³Á¤
+		
+		hot.addActionListener(this);
+		ice.addActionListener(this);
+		small.addActionListener(this);
+		tall.addActionListener(this);
+		large.addActionListener(this);
+		yes.addActionListener(this);
+		no.addActionListener(this);
 
-		ice_hot.setFont(new Font("", Font.BOLD, 15));
-		size.setFont(new Font("", Font.BOLD, 15));
-		shot.setFont(new Font("", Font.BOLD, 15));// ê¸€ì”¨ì²´ ì„¤ì •
+	}
+	void choice() {
 
 		choice1.add(ice_hot);
 		choice1.add(ice);
-		choice1.add(hot);// panelì— ë”í•˜ê¸°
-
+		choice1.add(hot);//panel¿¡ ´õÇÏ±â
+		
 		choice2.add(size);
 		choice2.add(small);
 		choice2.add(tall);
-		choice2.add(large);// panelì— ë”í•˜ê¸°
-
+		choice2.add(large);//panel¿¡ ´õÇÏ±â
+		
 		choice3.add(shot);
 		choice3.add(yes);
-		choice3.add(no);// panelì— ë”í•˜ê¸°
-
-		choice1.setBounds(100, 330, 200, 30);
-		choice2.setBounds(500, 330, 250, 30);
-		choice3.setBounds(110, 380, 200, 30);// panel ìœ„ì¹˜,í¬ê¸° ì„¤ì •
-
+		choice3.add(no);//panel¿¡ ´õÇÏ±â
+		
+		choice1.setBounds(100,330,200,30);
+		choice2.setBounds(500,330,250,30);
+		choice3.setBounds(110,380,200,30);//panel À§Ä¡,Å©±â ¼³Á¤
+		
 		add(choice1);
 		add(choice2);
-		add(choice3);// ì‚½ì…
-
-		hot.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				status2.setText("");
-				status3.setText("");
-				status1.setText(status0.getText());
-				status1.setText(status1.getText() + "/ HOT");
-
-			}
-		});
-		ice.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				status2.setText("");
-				status3.setText("");
-				status1.setText(status0.getText());
-				status1.setText(status1.getText() + "/ ICE");
-
-			}
-		});
-		status1.setBounds(500, 370, 300, 80);
-		status1.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-		add(status1);
-
-		small.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				b_price = 0;
-				status3.setText("");
-				status2.setText(status1.getText());
-				status2.setText(status2.getText() + "/ SMALL");
-				b_price = 1000;
-			}
-		});
-
-		tall.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				b_price = 0;
-				status3.setText("");
-				status2.setText(status1.getText());
-				status2.setText(status2.getText() + "/ TALL");
-				b_price = 1500;
-			}
-		});
-
-		large.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				b_price = 0;
-				status3.setText("");
-				status2.setText(status1.getText());
-				status2.setText(status2.getText() + "/ LARGE");
-				b_price = 2000;
-			}
-		});
-
-	
-
-		status2.setBounds(500, 370, 300, 80);
-		status2.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-		add(status2);
-
-		yes.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				status3.setText(status2.getText());
-				status3.setText(status3.getText() + "/ YES");
-				status3.setText(status3.getText() + "/ " + b_price + "ì›");
-			}
-		});
-
-		no.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				status3.setText(status2.getText());
-				status3.setText(status3.getText() + "/ NO");
-				status3.setText(status3.getText() + "/ " + b_price + "ì›");
-			}
-		});
-		status3.setBounds(500, 370, 300, 80);
-		status3.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-		add(status3);
-
-		cancle = new JButton("Cancle");
-		pay = new JButton("Pay");
-
-		cancle.setBounds(490, 450, 100, 50);
-		pay.setBounds(680, 450, 100, 50);
-
-		add(cancle);
-		add(pay);
-
-		cancle.addActionListener(new ActionListener() {
-			// cancle í´ë¦­ì‹œ ë°œìƒí•˜ëŠ” ì•¡ì…˜ì •ì˜
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				status0.setText("");
-				status1.setText("");
-				status2.setText("");
-				status3.setText("");
-			}
-		});
+		add(choice3);//»ğÀÔ
+		
+		choice1.repaint();
+		choice2.repaint();
+		choice3.repaint();
 
 	}
-
-//	void M_chat() {
-//		chat = new JButton("ì±„íŒ…");
-//		chat.addActionListener(this);
-//		chat.setBounds(110, 453, 200, 50);// ìœ„ì¹˜, í¬ê¸° ì„¤ì •
-//		chat.setBackground(new Color(210, 50, 50));// ìƒ‰ìƒ ë¹¨ê°„ìƒ‰
-//		chat.setFont(new Font("", Font.PLAIN, 17));// ê¸€ì”¨ì²´ ì„¤ì •
-//		chat.setForeground(new Color(255, 255, 255));// ê¸€ì”¨ í•˜ì–€ìƒ‰
-//		chat.setBorderPainted(false);
-//		add(chat);
-//	}
-
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand() == "chat") {
 			ClientChat clientChat = new ClientChat(userName);
 			new Thread(clientChat).start();
 		}
-	}
+		else if(e.getSource()==hot) {
+			add(status1);
+			i_h="";
+			s_t_l="";
+			status2.setText("");
+			status3.setText("");
+			status1.setText(status0.getText());
+			if(b_num==2) { //¾ÆÀÌ½ºÆ¼´Â ice ¸¸
+				status1.setText(status1.getText()+"/ ICE");
+				i_h="ice";
+			}
+			else {
+				status1.setText(status1.getText()+"/ HOT");
+				i_h="hot";
+			}
+			status1.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			add(status1);
+			
+		}
+		else if(e.getSource()==ice) {
+			add(status1);
+			i_h="";
+			s_t_l="";
+			y_n="";
+			status2.setText("");
+			status3.setText("");
+			status1.setText(status0.getText());
+			status1.setText(status1.getText()+"/ ICE");
+			status1.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			i_h="ice";
+			add(status1);
+		} 
+		else if(e.getSource()==small) {
+			add(status2);
+			b_price=0;
+			s_t_l="";
+			y_n="";
+			status3.setText("");
+			status2.setText(status1.getText());
+			status2.setText(status2.getText()+"/ SMALL");
+			if(b_num==1)//Ä«Æä¶ó¶¼ÀÏ °æ¿ì
+				b_price=1500;
+			else
+				b_price=1000;
+			status2.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			s_t_l="small";
+			add(status2);
+		}
+		else if(e.getSource()==tall) {
+			add(status2);
+			s_t_l="";
+			y_n="";
+			b_price=0;
+			status3.setText("");
+			status2.setText(status1.getText());
+			status2.setText(status2.getText()+"/ TALL");
+			if(b_num==1)//Ä«Æä¶ó¶¼ÀÏ °æ¿ì
+				b_price=2000;
+			else
+				b_price=1500;
+			status2.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			s_t_l="tall";
+			add(status2);
+		}
+		else if(e.getSource()==large) {
+			add(status2);
+			s_t_l="";
+			y_n="";
+			b_price=0;
+			status3.setText("");
+			status2.setText(status1.getText());
+			status2.setText(status2.getText()+"/ LARGE");
+			if(b_num==1)//Ä«Æä¶ó¶¼ÀÏ °æ¿ì
+				b_price=2500;
+			else
+				b_price=2000;
+			status2.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			s_t_l="large";
+			add(status2);
+		}
+		else if(e.getSource()==yes) {
+			add(status3);
+			y_n="";
+			price = b_price;
+			status3.setText(status2.getText());
+			if(b_num==2) { //¾ÆÀÌ½ºÆ¼´Â no ¼¦
+				status3.setText(status3.getText()+"/ NO");
+				y_n="n";
+			}
+			else {
+				status3.setText(status3.getText()+"/ YES");
+				price+=500;
+				y_n="y";
+			}
+			status3.setText(status3.getText()+"/ "+price+"¿ø");
+			status3.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			add(status3);
+		}
+		else if(e.getSource()==no) {
+			add(status3);
+			y_n="";
+			price=b_price;
+			status3.setText(status2.getText());
+			status3.setText(status3.getText()+"/ NO");
+			status3.setText(status3.getText()+"/ "+price+"¿ø");
+			status3.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			y_n="n";
+			add(status3);
+		}
+		else if(e.getSource()==pay) {
+			
+			int p=u_inf.getPrice(userName);
+			u_inf.updatePrice(userName, p, price);
+			for(int i = 0 ; i < 10 ; i++) {
+				if((b_num==i)&&(b_num>2)) {
+					u_inf.updateOrder(b[i].getText(), price, null, null, null);
+				}
+				else if((b_num==i)&&(b_num<3)) {
+					try {
+						if(i_h.equals("")||s_t_l.equals("")||y_n.equals("")) throw new Exception();
+						u_inf.updateOrder(b[i].getText(), price, y_n, s_t_l, i_h);
+						}catch(Exception ex) {
+							JOptionPane.showMessageDialog(null, "¿É¼ÇÀ» ÀüºÎ ¼±ÅÃÇØ ÁÖ½Ê½Ã¿À.");
+						}
+				}
+			}
+			
+		}
+		else if(e.getSource()==cancle) {
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			price=0;
+			add(status3);
+		}
+		else if(e.getSource()==b[0]) {
+			b_num=0;
+			add(status0);
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			status0.setText(e.getActionCommand());
+			status0.setBounds(500,370,300,80);
+			status0.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			choice();
 
+			add(status0);
+		}
+		
+		else if(e.getSource()==b[1]) {
+			b_num=1;
+			add(status0);
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			status0.setText(e.getActionCommand());
+			status0.setBounds(500,370,300,80);
+			status0.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			choice();
+			add(status0);
+		}
+		else if(e.getSource()==b[2]) {
+			b_num=2;
+			add(status0);
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			status0.setText(e.getActionCommand());
+			status0.setBounds(500,370,300,80);
+			status0.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			choice();
+			add(status0);
+		}
+		
+		else if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[5]||e.getSource()==b[6]||e.getSource()==b[7]||e.getSource()==b[8]||e.getSource()==b[9]) {
+			add(status0);
+			if(e.getSource()==b[3])
+				b_num=3;
+			else if(e.getSource()==b[4])
+				b_num=4;
+			else if(e.getSource()==b[5])
+				b_num=5;
+			else if(e.getSource()==b[6])
+				b_num=6;
+			else if(e.getSource()==b[7])
+				b_num=7;
+			else if(e.getSource()==b[8])
+				b_num=8;
+			else if(e.getSource()==b[9])
+				b_num=9;
+			status0.setText("");
+			status1.setText("");
+			status2.setText("");
+			status3.setText("");
+			if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[6]||e.getSource()==b[9]) {
+				price=2000;
+				status0.setText(e.getActionCommand()+ price+ "¿ø");
+			}
+			
+			else {
+				price=1000;
+				status0.setText(e.getActionCommand()+ price+ "¿ø");
+			}
+			status0.setBounds(590,370,300,80);
+			status0.setFont(new Font("",Font.PLAIN,17));//±Û¾¾Ã¼ ¼³Á¤
+			add(status0);
+			
+			if(flag==3) {
+				choice1.removeAll();
+				choice1.revalidate();
+				choice1.repaint();
+				choice2.removeAll();
+				choice2.revalidate();
+				choice2.repaint();
+				choice3.removeAll();
+				choice3.revalidate();
+				choice3.repaint();
+			}
+		}
+		
+	}
+	
+		public void itemStateChanged(ItemEvent e) {
+			if(e.getSource()==hot) {
+				status2.setText("");
+				status3.setText("");
+				status1.setText(status0.getText());
+				status1.setText(status1.getText()+"/ HOT");
+			}
+			else if(e.getSource()==ice) {
+				status2.setText("");
+				status3.setText("");
+				status1.setText(status0.getText());
+				status1.setText(status1.getText()+"/ ICE");
+			}
+				
+		}
+	
+			
+	
 }
