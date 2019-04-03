@@ -24,7 +24,7 @@ public class jdbcEx {
 		
 		managerGUI window=new managerGUI();
 		window.managerWindow();
-//		AdminChat adminChat = new AdminChat();
+		AdminChat adminChat = new AdminChat();
 //		adminChat.serverStart();
 	}
 

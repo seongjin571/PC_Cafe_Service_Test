@@ -21,7 +21,9 @@ import jdbc.dto.*;
 
 
 
-public class GUI extends JFrame {
+public class customerGUI extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	JLabel lb1, la1, la2, la3, la4, status;
 	JTextField id, pw;
 	JPanel idPanel, paPanel, loginPanel;
@@ -31,7 +33,7 @@ public class GUI extends JFrame {
 	user_inf u_inf = new user_inf();
 	Image img = null;
 	
-	public GUI() {
+	public customerGUI() {
 		super("Login"); //창 이름 Login
 		setLayout(null); //레이아웃 내가 원하는 위치로
 
@@ -114,7 +116,6 @@ public class GUI extends JFrame {
 						dispose();//login 창 삭제
 						
 						Menu j3 = new Menu("Menu",id.getText());// 새 Menu 창 생성
-						j3.id(id.getText());
 						j3.setVisible(true);
 						j3.setSize(882, 600);//크기 설정
 						j3.setLocation(500, 100);//생성될 위치 설정
@@ -157,7 +158,7 @@ public class GUI extends JFrame {
 	}
 	
 	public static void main(String[] args)  {
-		GUI j1 = new GUI();
+		customerGUI j1 = new customerGUI();
 		
 		
 	}

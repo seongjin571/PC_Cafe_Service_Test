@@ -26,7 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
-public class AdminChat extends JFrame implements ActionListener,Runnable, WindowListener {
+public class AdminChat extends JFrame implements ActionListener, WindowListener {
 	private static final long serialVersionUID = 1L;
 	JButton but_input;
 	JTextArea textArea;
@@ -34,13 +34,30 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 	JLabel name;
 	Font f1;
 	static ServerSocket serverSocket = null;
-	static Socket clientSocket = null;
+	static Socket client = null;
 	static PrintWriter out; 
 	static BufferedReader in;
 	static String inputLine, outputLine;
 
 	public AdminChat() {
+		System.out.println("서버 시작!!");
+		try {
+			serverSocket = new ServerSocket(3000);
+			while(true) {
+				 client = serverSocket.accept();
+				Chatting chatting = new Chatting(client);
+				chatting.start();
+			}
+		} catch (IOException e) {
+			System.out.println("해당 포트 번호에 연결할 수 없습니다!");
+			System.exit(1);
+		}
+	}
+	
+	
+	public void chatStart() {
 		setSize(550, 600);
+		setLocation(100,180);
 		f1 = new Font("돋움", Font.BOLD, 30);
 		addWindowListener(this);
 		setTitle("SeJong Pc Cafe");
@@ -66,8 +83,12 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		string_checker ck = new string_checker();
 		String s;
-		s = "관리자 : " + textInput.getText();
+		String in_str,return_str=null;
+		in_str=textInput.getText();
+		return_str=ck.check(in_str);
+		s = "관리자 : " + return_str;
 		if (e.getActionCommand() == "input") {
 			textArea.append(s + " "+ nowTime()+"\n");
 			out.println(s);
@@ -75,7 +96,6 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 		}
 	} 
 
-	
 	public String nowTime(){
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH시 mm분 ss초");
 		LocalDateTime time = LocalDateTime.now();
@@ -83,40 +103,37 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 		return nowTime;
 		
 	}
+class Chatting extends Thread{
+	Socket client;
+	Chatting (Socket client){
+		this.client = client;
+	}
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		System.out.println("서버 시작!");
+		
 		try {
-			serverSocket = new ServerSocket(3000);
-		} catch (IOException e) {
-			System.out.println("해당 포트 번호에 연결할 수 없습니다");
-			System.exit(1);
-		}
-		clientSocket = null;
-		try {
-			clientSocket = serverSocket.accept();
-		} catch (IOException e) {
-			System.err.println("accept() 실패 ");
-			System.exit(1);
-		}
-		try {
-			out = new PrintWriter(clientSocket.getOutputStream(), true);
+			out = new PrintWriter(client.getOutputStream(), true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
-			in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		chatStart();
+		chatStart();
 		textArea.append("클라이언트가 접속되었습니다.\n");
+
 		try {
+			String return_str;
+			string_checker ck = new string_checker();//d
 			while ((inputLine = in.readLine()) != null) {
-				String s = inputLine + " "+ nowTime()+"\n";
+				return_str=ck.check(inputLine);
+				String s = return_str + " " + nowTime() + "\n";
 				textArea.append(s);
 			}
 		} catch (IOException e) {
@@ -131,6 +148,7 @@ public class AdminChat extends JFrame implements ActionListener,Runnable, Window
 			e.printStackTrace();
 		}
 	}
+}
 
 	@Override
 	public void windowActivated(WindowEvent arg0) {

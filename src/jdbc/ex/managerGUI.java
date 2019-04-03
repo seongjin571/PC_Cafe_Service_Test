@@ -24,6 +24,7 @@ import jdbc.dto.Stock;
 public class managerGUI extends JFrame implements ActionListener, WindowListener{
 	 	
 	private static final long serialVersionUID = 1L;
+
 	JPanel contentPane,contentPane_sub,grid1,grid2,grid3,grid4;
 	   JButton btn1,btn2,btn3;
 	   JButton btn4,btn5,btn6,btn7,btn8,btn9,btn10,btn11,btn12,btn13,btn14;
@@ -39,10 +40,10 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	   
 	   public void showStock(){
 		   
-		   Object[] colNames; // ¿­ÀÌ¸§ => 1Â÷¿ø ¹è¿­
-	       Object[][] data; // 2Â÷¿ø ¹è¿­ µ¥ÀÌÅÍ
+		   Object[] colNames; // ì—´ì´ë¦„ => 1ì°¨ì› ë°°ì—´
+	       Object[][] data; // 2ì°¨ì› ë°°ì—´ ë°ì´í„°
 	       contentPane_sub=new JPanel();
-	       setTitle("Àç°í °ü¸® ÇÁ·Î±×·¥");
+	       setTitle("ì¬ê³  ê´€ë¦¬ í”„ë¡œê·¸ë¨");
 	       addWindowListener(this);
 	       
 	       setLayout(null);
@@ -51,10 +52,10 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		   ArrayList<Stock> list=dao.getStock();
 		   
 		   int rowCount = list.size();
-		   System.out.println("ÇàÀÇ °³¼ö: " + rowCount);
+		   System.out.println("í–‰ì˜ ê°œìˆ˜: " + rowCount);
             
 		 
-		   // ¿­ ÀÌ¸§À» ÀúÀåÇÒ ¹è¿­°´Ã¼¸¦ ¿­ÀÇ Å©±â¿Í µ¿ÀÏÇÏ°Ô »ı¼º
+		   // ì—´ ì´ë¦„ì„ ì €ì¥í•  ë°°ì—´ê°ì²´ë¥¼ ì—´ì˜ í¬ê¸°ì™€ ë™ì¼í•˜ê²Œ ìƒì„±
 		   colNames = new Object[rowCount];
 		   
 		   for(int i=0;i<rowCount;i++) {
@@ -67,34 +68,34 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 				data[0][r]=list.get(r).getCount();
 			}            
 			
-			la1=new JLabel("Àç°í ÇöÈ²");
+			la1=new JLabel("ì¬ê³  í˜„í™©");
 			la1.setBounds(35 , 5, 100, 50);
 			add(la1);
             
-			// Å×ÀÌºí »ı¼º
+			// í…Œì´ë¸” ìƒì„±
 			JTable table = new JTable(data, colNames);
 			JScrollPane j = new JScrollPane(table);
 			j.setBounds(35, 50, 900, 150);
 	        add(j);
 	        
-	        la2=new JLabel("¹°Ç°ÁÖ¹®");
+	        la2=new JLabel("ë¬¼í’ˆì£¼ë¬¸");
 			la2.setBounds(35 , 200, 100, 50);
 			add(la2);
 			
 			grid1=new JPanel();
 			grid1.setLayout(new GridLayout(2,5,30,30));
 			
-			btn4=new JButton("°Ç»§");
-			btn5=new JButton("´©³×¶ì³×");
-			btn6=new JButton("»§");
-			btn7=new JButton("»õ¿ì±ø");
-			btn8=new JButton("¼Ò¼¼Áö");
-			btn9=new JButton("¾ÆÀÌ½ºÆ¼");
-			btn10=new JButton("¿ìÀ¯");
-			btn11=new JButton("¿øµÎ");
-			btn12=new JButton("Áø¶ó¸é");
-			btn13=new JButton("Â¥ÆÄ°ÔÆ¼");
-			btn14=new JButton("È¨·±º¼");
+			btn4=new JButton("ê±´ë¹µ");
+			btn5=new JButton("ëˆ„ë„¤ë ë„¤");
+			btn6=new JButton("ë¹µ");
+			btn7=new JButton("ìƒˆìš°ê¹¡");
+			btn8=new JButton("ì†Œì„¸ì§€");
+			btn9=new JButton("ì•„ì´ìŠ¤í‹°");
+			btn10=new JButton("ìš°ìœ ");
+			btn11=new JButton("ì›ë‘");
+			btn12=new JButton("ì§„ë¼ë©´");
+			btn13=new JButton("ì§œíŒŒê²Œí‹°");
+			btn14=new JButton("í™ˆëŸ°ë³¼");
 			
 			label=new JLabel();
 			label.setBounds(35, 475, 500, 50);
@@ -133,11 +134,11 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			grid2=new JPanel();
 			grid2.setLayout(new GridLayout(1,4,100,100));
 			
-			btn16=new JButton("ÁÖ¹®");
+			btn16=new JButton("ì£¼ë¬¸");
 			btn16.addActionListener(this);
-			btn17=new JButton("ÆÇ¸ÅÇöÈ²");
+			btn17=new JButton("íŒë§¤í˜„í™©");
 			btn17.addActionListener(this);
-			btn18=new JButton("ÃÊ±âÈ­");
+			btn18=new JButton("ì´ˆê¸°í™”");
 			btn18.addActionListener(this);
 			
 			grid2.add(btn16);
@@ -155,24 +156,24 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	   public void sale() {
 		   
 		   
-	       setTitle("ÆÇ¸Å ÇöÈ²");
+	       setTitle("íŒë§¤ í˜„í™©");
 	       addWindowListener(this);
 	       setLayout(null);
 	       contentPane_sub=new JPanel();
-			la4=new JLabel("Àç°í ÇöÈ²");
+			la4=new JLabel("ì¬ê³  í˜„í™©");
 			la4.setBounds(35 , 5, 100, 50);
 			add(la4);
             
-			la5=new JLabel("¹°Ç°ÁÖ¹®");
+			la5=new JLabel("ë¬¼í’ˆì£¼ë¬¸");
 			la5.setBounds(35 , 200, 100, 50);
 			add(la5);
 			
 			grid4=new JPanel();
 			grid4.setLayout(new GridLayout(1,3,100,100));
 			
-			btn19=new JButton("¸ÅÃâ");
-			btn20=new JButton("¸Ş´ºº°ÆÇ¸Å");
-			btn21=new JButton("ÆÇ¸Å¸®½ºÆ®");
+			btn19=new JButton("ë§¤ì¶œ");
+			btn20=new JButton("ë©”ë‰´ë³„íŒë§¤");
+			btn21=new JButton("íŒë§¤ë¦¬ìŠ¤íŠ¸");
 			
 			grid4.add(btn19);
 			grid4.add(btn20);
@@ -189,7 +190,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 	   
 	   public void managerWindow() {
 		   
-	       setTitle("°ü¸®ÀÚ");
+	       setTitle("ê´€ë¦¬ì");
 	       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	       contentPane=new JPanel();
 	       setLayout(null);
@@ -201,15 +202,12 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			
 		   grid3=new JPanel();
 		   grid3.setLayout(new GridLayout(1,3,50,50));
-	       btn1=new JButton("ÆÇ¸ÅÇöÈ²");
+	       btn1=new JButton("íŒë§¤í˜„í™©");
 	       grid3.add(btn1);
 	       btn1.addActionListener(this);
-	       btn2=new JButton("Àç°í°ü¸®");
+	       btn2=new JButton("ì¬ê³ ê´€ë¦¬");
 	       grid3.add(btn2);
 		   btn2.addActionListener(this);
-		   btn3=new JButton("Ã¤ÆÃ");
-	       grid3.add(btn3);
-	       btn3.addActionListener(this);
 		
 	       grid3.setBounds(60,600,500,80);
 	       add(grid3);
@@ -238,6 +236,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 			AdminChat adminChat = new AdminChat();
 			new Thread(adminChat).start();
 		}
+
 		
 		if(e.getSource()==btn16) {
 			try {
@@ -247,7 +246,7 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 				setVisible(false);
 				new managerGUI().showStock();
 			}catch(Exception ex) {
-				JOptionPane.showMessageDialog(null, "Àß¸øµÈ ÀÔ·Â ÀÔ´Ï´Ù.");
+				JOptionPane.showMessageDialog(null, "ì˜ëª»ëœ ì…ë ¥ ì…ë‹ˆë‹¤.");
 			}
 		}
 		else if(e.getSource()==btn17) {
@@ -260,8 +259,8 @@ public class managerGUI extends JFrame implements ActionListener, WindowListener
 		
 		if(e.getSource()==btn4 || e.getSource()==btn5 || e.getSource()==btn6 || e.getSource()==btn7 || e.getSource()==btn8 || e.getSource()==btn9 ||e.getSource()==btn10 ||e.getSource()==btn11 || e.getSource()==btn12 || e.getSource()==btn13 || e.getSource()==btn14) {
 			str=e.getActionCommand();
-			label.setText(e.getActionCommand()+"À»/¸¦ ÁÖ¹®ÇÏ½Ç°Ç°¡¿ä? ¼ö·®À» ÀÔ·ÂÇÏ¼¼¿ä.");
-			la3.setText("ÁÖ¹®¼ö·®ÀÔ·Â:");
+			label.setText(e.getActionCommand()+"ì„/ë¥¼ ì£¼ë¬¸í•˜ì‹¤ê±´ê°€ìš”? ìˆ˜ëŸ‰ì„ ì…ë ¥í•˜ì„¸ìš”.");
+			la3.setText("ì£¼ë¬¸ìˆ˜ëŸ‰ì…ë ¥:");
 			add(text);
 		}
 		
