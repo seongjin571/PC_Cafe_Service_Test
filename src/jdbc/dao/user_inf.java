@@ -221,13 +221,13 @@ public class user_inf {
 		 
 		 return price;
 	 }	
-	public int updateprice(String id, int price1, int price2) {
-		 
+	public int updatePrice(String id, int price1, int price2) {
+		 price1+=price2;
 		int result = 0;
 		 try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
-			String sql = "update user_inf set u_price ="+price1+price2+" where u_id = ?";
+			String sql = "update user_inf set u_price ="+price1+" where u_id = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, id);
 			result = ps.executeUpdate();
@@ -269,6 +269,56 @@ public class user_inf {
 		}
 		 return result;
 	 }
-	
+
+	public int updateOrder(String name, int price, String shot, String size, String tem) {
+		int result = 0;
+		 try {
+			 Class.forName("com.mysql.cj.jdbc.Driver");
+				conn = DriverManager.getConnection(dburl, dbUser, dbpwd);
+				String sql = "insert into ordertable value(?,?,?,?,?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, name);
+				ps.setInt(2, price);
+				ps.setString(3, shot);
+				ps.setString(4, size);
+				ps.setString(5, tem);
+				result = ps.executeUpdate();
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(ps!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			if(conn!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		 return result;
+	 }
 	
 }

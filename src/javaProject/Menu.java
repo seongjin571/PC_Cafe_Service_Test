@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import AdminChat.ClientChat;
 import jdbc.dto.user;
+import jdbc.ex.managerGUI;
 import jdbc.dao.*;
 import jdbc.dto.*;
 
@@ -25,7 +26,7 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 	ButtonGroup group1, group2, group3;
 	user_inf u_inf = new user_inf();
 	int i, b_price=0, price=0, flag=0, b_num;
-	String userName;
+	String userName, i_h, s_t_l, y_n;
 
 	Menu(String str, String userName) {
 		super(str);
@@ -184,29 +185,41 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		}
 		else if(e.getSource()==hot) {
 			add(status1);
+			i_h="";
+			s_t_l="";
 			status2.setText("");
 			status3.setText("");
 			status1.setText(status0.getText());
-			if(b_num==2) //아이스티는 ice 만
+			if(b_num==2) { //아이스티는 ice 만
 				status1.setText(status1.getText()+"/ ICE");
-			else
+				i_h="ice";
+			}
+			else {
 				status1.setText(status1.getText()+"/ HOT");
+				i_h="hot";
+			}
 			status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
 			add(status1);
 			
 		}
 		else if(e.getSource()==ice) {
 			add(status1);
+			i_h="";
+			s_t_l="";
+			y_n="";
 			status2.setText("");
 			status3.setText("");
 			status1.setText(status0.getText());
 			status1.setText(status1.getText()+"/ ICE");
 			status1.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			i_h="ice";
 			add(status1);
 		} 
 		else if(e.getSource()==small) {
 			add(status2);
 			b_price=0;
+			s_t_l="";
+			y_n="";
 			status3.setText("");
 			status2.setText(status1.getText());
 			status2.setText(status2.getText()+"/ SMALL");
@@ -215,10 +228,13 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			else
 				b_price=1000;
 			status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
-			add(status2);	
+			s_t_l="small";
+			add(status2);
 		}
 		else if(e.getSource()==tall) {
 			add(status2);
+			s_t_l="";
+			y_n="";
 			b_price=0;
 			status3.setText("");
 			status2.setText(status1.getText());
@@ -228,10 +244,13 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			else
 				b_price=1500;
 			status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			s_t_l="tall";
 			add(status2);
 		}
 		else if(e.getSource()==large) {
 			add(status2);
+			s_t_l="";
+			y_n="";
 			b_price=0;
 			status3.setText("");
 			status2.setText(status1.getText());
@@ -241,17 +260,22 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 			else
 				b_price=2000;
 			status2.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			s_t_l="large";
 			add(status2);
 		}
 		else if(e.getSource()==yes) {
 			add(status3);
+			y_n="";
 			price = b_price;
 			status3.setText(status2.getText());
-			if(b_num==2) //아이스티는 no 샷
+			if(b_num==2) { //아이스티는 no 샷
 				status3.setText(status3.getText()+"/ NO");
+				y_n="n";
+			}
 			else {
 				status3.setText(status3.getText()+"/ YES");
 				price+=500;
+				y_n="y";
 			}
 			status3.setText(status3.getText()+"/ "+price+"원");
 			status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
@@ -259,16 +283,32 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		}
 		else if(e.getSource()==no) {
 			add(status3);
+			y_n="";
 			price=b_price;
 			status3.setText(status2.getText());
 			status3.setText(status3.getText()+"/ NO");
 			status3.setText(status3.getText()+"/ "+price+"원");
 			status3.setFont(new Font("",Font.PLAIN,17));//글씨체 설정
+			y_n="n";
 			add(status3);
 		}
 		else if(e.getSource()==pay) {
+			
 			int p=u_inf.getPrice(userName);
-			u_inf.updateprice(userName, p, price);
+			u_inf.updatePrice(userName, p, price);
+			for(int i = 0 ; i < 10 ; i++) {
+				if((b_num==i)&&(b_num>2)) {
+					u_inf.updateOrder(b[i].getText(), price, null, null, null);
+				}
+				else if((b_num==i)&&(b_num<3)) {
+					try {
+						if(i_h.equals("")||s_t_l.equals("")||y_n.equals("")) throw new Exception();
+						u_inf.updateOrder(b[i].getText(), price, y_n, s_t_l, i_h);
+						}catch(Exception ex) {
+							JOptionPane.showMessageDialog(null, "옵션을 전부 선택해 주십시오.");
+						}
+				}
+			}
 			
 		}
 		else if(e.getSource()==cancle) {
@@ -322,7 +362,21 @@ public class Menu extends JFrame implements ActionListener, ItemListener{
 		}
 		
 		else if(e.getSource()==b[3]||e.getSource()==b[4]||e.getSource()==b[5]||e.getSource()==b[6]||e.getSource()==b[7]||e.getSource()==b[8]||e.getSource()==b[9]) {
-		
+			add(status0);
+			if(e.getSource()==b[3])
+				b_num=3;
+			else if(e.getSource()==b[4])
+				b_num=4;
+			else if(e.getSource()==b[5])
+				b_num=5;
+			else if(e.getSource()==b[6])
+				b_num=6;
+			else if(e.getSource()==b[7])
+				b_num=7;
+			else if(e.getSource()==b[8])
+				b_num=8;
+			else if(e.getSource()==b[9])
+				b_num=9;
 			status0.setText("");
 			status1.setText("");
 			status2.setText("");
